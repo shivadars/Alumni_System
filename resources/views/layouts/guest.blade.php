@@ -36,18 +36,17 @@
 
             <!-- Main Auth Container -->
             <main class="hero-login relative min-h-screen flex items-center justify-center overflow-hidden">
-                <!-- Background Image with Dark Overlay -->
+                <!-- Background Image with Overlay -->
                 <div class="absolute inset-0 z-0 overflow-hidden">
                     <img src="{{ asset('images/hero-bg.png') }}" alt="Background" class="w-full h-full object-cover">
-                    <!-- 1️⃣ Dark Overlay -->
-                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="absolute inset-0 bg-slate-900/40"></div>
                 </div>
 
-                <!-- 6️⃣ Center the Login Card Perfectly -->
+                <!-- Centered Login Card Container -->
                 <div class="login-container relative z-10 w-full flex justify-center items-center px-4 py-12">
-                    <!-- 7️⃣ Add Glass Effect Card Layer -->
-                    <div class="login-card w-full sm:max-w-md backdrop-blur-md bg-white/90 rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.15)] overflow-hidden">
-                        <div class="p-10">
+                    <!-- Standard Professional Squared Card - Wider with Inline Style for reliability -->
+                    <div class="login-card bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden" style="width: 550px; max-width: 100%;">
+                        <div class="p-8 md:p-14">
                             {{ $slot }}
                         </div>
                     </div>
