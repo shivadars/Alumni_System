@@ -16,7 +16,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #F3F2EF !important; color: #111827; }
         
         .navbar {
-            padding: 20px 60px;
+            padding: 10px 60px;
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
@@ -127,7 +127,9 @@
         <!-- Navbar -->
         <header class="navbar">
             <div class="logo">
-                <span class="text-2xl font-bold tracking-tight text-blue-600">◇ Connectwork</span>
+                <a href="/">
+                    <img src="{{ asset('images/logo.png') }}" alt="Connectwork Logo" class="h-12 w-auto">
+                </a>
             </div>
             
             <nav class="nav-links">
@@ -140,7 +142,7 @@
 
         <!-- Premium Hero Section -->
         <main class="hero">
-            <img src="https://images.unsplash.com/photo-1541339946196-92d535e642ef?q=80&w=2000&auto=format&fit=crop" alt="High Resolution Campus Background" class="hero-bg">
+            <img src="{{ asset('images/hero-bg.png') }}" alt="Background" class="hero-bg">
             
             <div class="hero-text">
                 <h1>Connecting Talent with Opportunity</h1>

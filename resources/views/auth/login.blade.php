@@ -1,7 +1,9 @@
 <x-guest-layout>
     <div class="space-y-6">
         <!-- 9️⃣ Small Logo Above Form -->
-        <h3 class="text-xl font-bold text-center text-blue-600 mb-2">◇ Connectwork</h3>
+        <div class="flex justify-center mb-2">
+            <img src="{{ asset('images/logo.png') }}" alt="Connectwork Logo" class="h-16 w-auto">
+        </div>
 
         <!-- 3️⃣ Title Above Form -->
         <div class="text-center">

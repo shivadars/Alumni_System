@@ -4,10 +4,9 @@
         <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center gap-2">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-                        <x-application-logo class="block h-10 w-auto text-blue-600" />
-                        <span class="text-2xl font-black text-slate-900 tracking-tighter">Connectwork</span>
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <x-application-logo class="block h-10 w-auto" />
                     </a>
                 </div>
 

@@ -20,8 +20,10 @@
             
             <!-- Header (Optional for Guest) -->
             <header class="fixed top-0 left-0 w-full z-50 px-8 h-[80px] flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl font-bold tracking-tight text-white/90">◇ Connectwork</span>
+                <div class="flex items-center">
+                    <a href="/">
+                        <img src="{{ asset('images/logo.png') }}" alt="Connectwork Logo" class="h-12 w-auto brightness-0 invert">
+                    </a>
                 </div>
                 <nav class="hidden md:flex gap-8 text-[15px] font-medium">
                     <a href="/" class="text-white/70 hover:text-white transition-colors">Home</a>
