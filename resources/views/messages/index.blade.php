@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="py-8 h-[calc(100vh-64px)] overflow-hidden">
+    <div class="py-8 h-[calc(100vh-80px)] overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
             <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex h-full">
                 
                 <!-- Sidebar (Left Column) -->
-                <div class="w-full md:w-80 lg:w-96 border-r border-slate-100 flex flex-col bg-slate-50/30">
+                <div class="w-full md:w-80 lg:w-96 border-r border-slate-100 flex flex-col bg-[#F3F2EF]/30">
                     <!-- Search Header -->
                     <div class="p-6 border-b border-slate-100 bg-white">
                         <div class="relative group">

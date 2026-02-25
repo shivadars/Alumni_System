@@ -13,19 +13,13 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            body { background-color: #F3F2EF !important; margin: 0; padding: 0; }
+        </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased text-gray-900" style="background-color: #F3F2EF !important; margin: 0; padding: 0;">
+        <div style="background-color: #F3F2EF !important; min-height: 100vh;">
             @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
 
             <!-- Page Content -->
             <main>

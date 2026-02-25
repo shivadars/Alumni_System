@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center gap-2">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                         <x-application-logo class="block h-10 w-auto text-blue-600" />
-                        <span class="text-2xl font-black text-slate-900 tracking-tighter">AlumniConnect</span>
+                        <span class="text-2xl font-black text-slate-900 tracking-tighter">Connectwork</span>
                     </a>
                 </div>
 
@@ -93,9 +93,6 @@
                             {{ __('My Info') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile Settings') }}
-                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -165,10 +162,6 @@
                 </x-responsive-nav-link>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -182,5 +175,4 @@
                 </form>
             </div>
         </div>
-    </div>
 </nav>

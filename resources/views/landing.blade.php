@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; color: #111827; }
+        body { font-family: 'Inter', sans-serif; background-color: #F3F2EF !important; color: #111827; }
         
         .navbar {
             padding: 20px 60px;
@@ -121,8 +121,8 @@
         }
     </style>
 </head>
-<body class="antialiased">
-    <div class="relative min-h-screen">
+<body class="antialiased bg-[#F3F2EF]">
+    <div class="relative min-h-screen bg-[#F3F2EF]">
         
         <!-- Navbar -->
         <header class="navbar">
@@ -140,7 +140,7 @@
 
         <!-- Premium Hero Section -->
         <main class="hero">
-            <img src="{{ asset('images/hero-bg.png') }}" alt="Background" class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1541339946196-92d535e642ef?q=80&w=2000&auto=format&fit=crop" alt="High Resolution Campus Background" class="hero-bg">
             
             <div class="hero-text">
                 <h1>Connecting Talent with Opportunity</h1>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="pt-6 pb-12 bg-slate-50 min-h-screen">
+    <div class="pt-6 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="flex flex-col lg:flex-row gap-8 items-start">
