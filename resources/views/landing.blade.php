@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Connectwork - Alumni Interaction System</title>
+    <title>alumni-system</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/tab.png') }}">
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F3F2EF !important; color: #111827; }
@@ -36,7 +39,9 @@
             position: relative;
             display: flex;
             align-items: center;
+            justify-content: center;
             overflow: hidden;
+            text-align: center;
         }
 
         .hero::before {
@@ -60,8 +65,9 @@
             position: relative;
             z-index: 2;
             color: white;
-            max-width: 650px;
-            margin-left: 80px;
+            max-width: 800px;
+            margin: 0 20px;
+            text-align: center;
         }
 
         .hero-text h1 {
@@ -145,7 +151,7 @@
             <img src="{{ asset('images/hero-bg.png') }}" alt="Background" class="hero-bg">
             
             <div class="hero-text">
-                <h1>Connecting Talent with Opportunity</h1>
+                <h1>Connect.Engage.Grow</h1>
                 <p>A platform where students and alumni build meaningful professional connections through opportunities and mentorship.</p>
                 <a href="{{ route('login') }}" class="login-btn">Get Started</a>
             </div>

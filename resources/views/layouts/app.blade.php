@@ -13,6 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('images/tab.png') }}">
         <style>
             body { background-color: #F3F2EF !important; margin: 0; padding: 0; }
         </style>
