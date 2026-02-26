@@ -68,6 +68,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{user}', [App\Http\Controllers\AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 });
 
+// Department Role Routes
+Route::middleware(['auth', 'role:department', 'profile.complete'])->prefix('department')->name('department.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/list', [App\Http\Controllers\DepartmentController::class, 'index'])->name('index');
+    Route::get('/{department}', [App\Http\Controllers\DepartmentController::class, 'show'])->name('show');
+});
+
 // Private Messaging Routes
 Route::middleware(['auth', 'profile.complete'])->group(function () {
     Route::get('/messages', [App\Http\Controllers\MessageController::class, 'index'])->name('messages.index');

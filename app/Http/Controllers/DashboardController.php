@@ -9,7 +9,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user.profile')->latest()->get();
+        $user = auth()->user();
+        $query = Post::with('user.profile')->latest();
+
+        // Filter posts by department for student, alumni, and department users
+        if (in_array($user->role, ['student', 'alumni', 'department'])) {
+            $department = $user->profile->department;
+            $query->where('department', $department);
+        }
+
+        $posts = $query->get();
         
         // Stats for sidebar
         $alumniNetworkCount = \App\Models\User::where('role', 'alumni')->count();

@@ -15,8 +15,8 @@ class PostController extends Controller
 
     public function create()
     {
-        // Ensure only alumni can access
-        if (Auth::user()->role !== 'alumni') {
+        // Ensure only alumni or department users can access
+        if (!in_array(Auth::user()->role, ['alumni', 'department'])) {
             abort(403, 'Unauthorized action.');
         }
         return view('posts.create');
@@ -24,8 +24,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        // Ensure only alumni can create
-        if (Auth::user()->role !== 'alumni') {
+        // Ensure only alumni or department users can create
+        if (!in_array(Auth::user()->role, ['alumni', 'department'])) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -40,6 +40,7 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'category' => $request->category,
+            'department' => Auth::user()->profile->department,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');

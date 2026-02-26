@@ -43,7 +43,7 @@
                         @endif
                     </a>
 
-                    @if(Auth::user()->role === 'alumni')
+                    @if(in_array(Auth::user()->role, ['alumni', 'department']))
                         <a href="{{ route('posts.index') }}" class="{{ $linkClasses }} {{ request()->routeIs('posts.index') ? $activeClasses : $inactiveClasses }}">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             {{ __('Posts') }}
@@ -54,6 +54,13 @@
                         <a href="{{ route('admin.users.index') }}" class="{{ $linkClasses }} {{ request()->routeIs('admin.users.index') ? $activeClasses : $inactiveClasses }}">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             {{ __('Users') }}
+                        </a>
+                    @endif
+
+                    @if(Auth::user()->role === 'department')
+                        <a href="{{ route('department.index') }}" class="{{ $linkClasses }} {{ request()->routeIs('department.index') || request()->routeIs('department.show') ? $activeClasses : $inactiveClasses }}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            {{ __('Departments') }}
                         </a>
                     @endif
                 </div>
@@ -134,7 +141,7 @@
                 {{ __('Messages') }}
             </x-responsive-nav-link>
             
-             @if(Auth::user()->role === 'alumni')
+             @if(in_array(Auth::user()->role, ['alumni', 'department']))
                 <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')" class="rounded-lg">
                     {{ __('Posts') }}
                 </x-responsive-nav-link>
@@ -143,6 +150,12 @@
              @if(Auth::user()->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')" class="rounded-lg">
                     {{ __('Users') }}
+                </x-responsive-nav-link>
+             @endif
+
+             @if(Auth::user()->role === 'department')
+                <x-responsive-nav-link :href="route('department.index')" :active="request()->routeIs('department.index') || request()->routeIs('department.show')" class="rounded-lg">
+                    {{ __('Departments') }}
                 </x-responsive-nav-link>
              @endif
         </div>

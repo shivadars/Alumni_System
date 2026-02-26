@@ -15,6 +15,7 @@
             <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 <option value="student">Student</option>
                 <option value="alumni">Alumni</option>
+                <option value="department">Department</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>

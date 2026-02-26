@@ -36,6 +36,8 @@ class RoleMiddleware
              return redirect()->route('student.dashboard');
         } elseif ($user->role === 'alumni') {
              return redirect()->route('alumni.dashboard');
+        } elseif ($user->role === 'department') {
+             return redirect()->route('department.dashboard');
         }
 
         abort(403, 'Unauthorized access.');

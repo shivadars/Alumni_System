@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     
-                    @if(Auth::user()->role === 'alumni')
+                    @if(in_array(Auth::user()->role, ['alumni', 'department']))
                         <div class="text-center py-8">
                             <p class="text-gray-600 mb-4">{{ __('Ready to share something with the community?') }}</p>
                             <a href="{{ route('posts.create') }}" class="inline-flex items-center px-6 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
