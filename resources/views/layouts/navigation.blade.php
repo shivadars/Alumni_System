@@ -43,7 +43,7 @@
                         @endif
                     </a>
 
-                    @if(in_array(Auth::user()->role, ['alumni', 'department']))
+                    @if(in_array(Auth::user()->role, ['alumni', 'department', 'admin']))
                         <a href="{{ route('posts.index') }}" class="{{ $linkClasses }} {{ request()->routeIs('posts.index') ? $activeClasses : $inactiveClasses }}">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             {{ __('Posts') }}
@@ -140,8 +140,7 @@
             <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')" class="rounded-lg">
                 {{ __('Messages') }}
             </x-responsive-nav-link>
-            
-             @if(in_array(Auth::user()->role, ['alumni', 'department']))
+                        @if(in_array(Auth::user()->role, ['alumni', 'department', 'admin']))
                 <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')" class="rounded-lg">
                     {{ __('Posts') }}
                 </x-responsive-nav-link>

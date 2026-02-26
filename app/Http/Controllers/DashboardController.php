@@ -10,12 +10,18 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $query = Post::with('user.profile')->latest();
+        $query = Post::with(['user.profile', 'comments.user.profile'])->latest();
+        $department = null;
 
-        // Filter posts by department for student, alumni, and department users
+        // Filter posts: show dept-specific posts OR any admin posts
         if (in_array($user->role, ['student', 'alumni', 'department'])) {
             $department = $user->profile->department;
-            $query->where('department', $department);
+            $query->where(function ($q) use ($department) {
+                $q->whereRaw('LOWER(department) = LOWER(?)', [$department])
+                  ->orWhereHas('user', function ($u) {
+                      $u->where('role', 'admin');
+                  });
+            });
         }
 
         $posts = $query->get();
@@ -34,6 +40,6 @@ class DashboardController extends Controller
             ->limit(3)
             ->get();
 
-        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections'));
+        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections', 'department'));
     }
 }

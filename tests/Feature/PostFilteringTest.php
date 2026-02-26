@@ -68,4 +68,53 @@ class PostFilteringTest extends TestCase
             'department' => 'Mechanical'
         ]);
     }
+
+    public function test_department_filtering_is_case_insensitive()
+    {
+        // Only run this test if using a DB that supports ILIKE or if we want to ensure basic behavior
+        // In local/test (SQLite), ILIKE behaves like LIKE (case-insensitive)
+        
+        $deptUser = User::factory()->create(['role' => 'department']);
+        $deptUser->profile()->create(['department' => 'computer science']); // lowercase
+        
+        $this->actingAs($deptUser)->post(route('posts.store'), [
+            'title' => 'Lowcase Post',
+            'content' => 'content',
+            'category' => 'News'
+        ]);
+
+        $alumni = User::factory()->create(['role' => 'alumni']);
+        $alumni->profile()->create(['department' => 'Computer Science']); // Capitalized
+        
+        $response = $this->actingAs($alumni)->get(route('dashboard'));
+        $response->assertSee('Lowcase Post');
+    }
+
+    public function test_admin_posts_are_visible_to_all_departments()
+    {
+        // Create an Admin and a post
+        $admin = User::factory()->create(['role' => 'admin']);
+        
+        $post = Post::create([
+            'user_id' => $admin->id,
+            'title' => 'Global Admin Post',
+            'content' => 'This is a message for everyone',
+            'category' => 'Announcement',
+            'department' => null // Admin posts might not have a department
+        ]);
+
+        // Verify CS Student can see it
+        $csStudent = User::factory()->create(['role' => 'student']);
+        $csStudent->profile()->create(['department' => 'Computer Science']);
+        
+        $response = $this->actingAs($csStudent)->get(route('dashboard'));
+        $response->assertSee('Global Admin Post');
+
+        // Verify EC Alumni can see it
+        $ecAlumni = User::factory()->create(['role' => 'alumni']);
+        $ecAlumni->profile()->create(['department' => 'Electronics']);
+        
+        $response = $this->actingAs($ecAlumni)->get(route('dashboard'));
+        $response->assertSee('Global Admin Post');
+    }
 }

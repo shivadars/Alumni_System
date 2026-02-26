@@ -15,8 +15,8 @@ class PostController extends Controller
 
     public function create()
     {
-        // Ensure only alumni or department users can access
-        if (!in_array(Auth::user()->role, ['alumni', 'department'])) {
+        // Ensure only alumni, department or admin users can access
+        if (!in_array(Auth::user()->role, ['alumni', 'department', 'admin'])) {
             abort(403, 'Unauthorized action.');
         }
         return view('posts.create');
@@ -24,8 +24,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        // Ensure only alumni or department users can create
-        if (!in_array(Auth::user()->role, ['alumni', 'department'])) {
+        // Ensure only alumni, department or admin users can create
+        if (!in_array(Auth::user()->role, ['alumni', 'department', 'admin'])) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -33,14 +33,21 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category' => 'required|string|max:100',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('posts', 'public');
+        }
 
         Post::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
             'content' => $request->content,
             'category' => $request->category,
-            'department' => Auth::user()->profile->department,
+            'department' => Auth::user()->profile ? Auth::user()->profile->department : null,
+            'image' => $imagePath,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');

@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('posts.store') }}">
+                    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Title -->
@@ -29,6 +29,13 @@
                                 <option value="Achievement">{{ __('Achievement') }}</option>
                             </select>
                             <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mt-4">
+                            <x-input-label for="image" :value="__('Post Image (Optional)')" />
+                            <input id="image" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="file" name="image" accept="image/*" />
+                            <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>
 
                         <!-- Content -->

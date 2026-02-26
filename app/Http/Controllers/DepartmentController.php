@@ -31,7 +31,7 @@ class DepartmentController extends Controller
     {
         $alumni = User::where('role', 'alumni')
             ->whereHas('profile', function ($query) use ($department) {
-                $query->where('department', $department);
+                $query->whereRaw('LOWER(department) = LOWER(?)', [$department]);
             })
             ->with('profile')
             ->get();

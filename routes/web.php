@@ -53,6 +53,7 @@ Route::middleware(['auth', 'profile.complete'])->group(function () {
     Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts/{post}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('posts.comments.store');
 });
 
 // Alumni Search Routes
