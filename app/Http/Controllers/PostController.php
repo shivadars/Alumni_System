@@ -34,11 +34,17 @@ class PostController extends Controller
             'content' => 'required|string',
             'category' => 'required|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'video' => 'nullable|file|mimes:mp4,mov,ogg,qt|max:51200', // max 50MB
         ]);
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('posts', 'public');
+            $imagePath = $request->file('image')->store('posts/images', 'public');
+        }
+
+        $videoPath = null;
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('posts/videos', 'public');
         }
 
         Post::create([
@@ -48,6 +54,7 @@ class PostController extends Controller
             'category' => $request->category,
             'department' => Auth::user()->profile ? Auth::user()->profile->department : null,
             'image' => $imagePath,
+            'video' => $videoPath,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');

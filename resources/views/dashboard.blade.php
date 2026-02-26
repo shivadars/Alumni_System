@@ -55,6 +55,15 @@
                                             <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-auto object-cover max-h-[500px]">
                                         </div>
                                     @endif
+
+                                    @if($post->video)
+                                        <div class="mt-4 rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-900">
+                                            <video controls class="w-full h-auto max-h-[500px]">
+                                                <source src="{{ asset('storage/' . $post->video) }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Post Interactions -->

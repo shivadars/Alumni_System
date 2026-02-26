@@ -38,6 +38,13 @@
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>
 
+                        <!-- Video -->
+                        <div class="mt-4">
+                            <x-input-label for="video" :value="__('Post Video (Optional)')" />
+                            <input id="video" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="file" name="video" accept="video/*" />
+                            <x-input-error :messages="$errors->get('video')" class="mt-2" />
+                        </div>
+
                         <!-- Content -->
                         <div class="mt-4">
                             <x-input-label for="content" :value="__('Content')" />
