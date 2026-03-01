@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         $query = Post::with(['user.profile', 'comments.user.profile'])->latest();
         $department = null;
+
+        if ($request->has('category')) {
+            $query->where('category', $request->category);
+        }
 
         // Filter posts: show dept-specific posts OR any admin posts
         if (in_array($user->role, ['student', 'alumni', 'department'])) {
@@ -40,6 +44,13 @@ class DashboardController extends Controller
             ->limit(3)
             ->get();
 
-        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections', 'department'));
+        // Trending Topics (Top 5 post categories)
+        $trendingTopics = Post::select('category', \DB::raw('count(*) as total'))
+            ->groupBy('category')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->pluck('category');
+
+        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections', 'department', 'trendingTopics'));
     }
 }

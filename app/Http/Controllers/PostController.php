@@ -59,4 +59,16 @@ class PostController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }
+
+    public function destroy(Post $post)
+    {
+        // Allow deletion if the user is the author OR the user is an admin
+        if (Auth::id() !== $post->user_id && Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $post->delete();
+
+        return back()->with('success', 'Post deleted successfully.');
+    }
 }

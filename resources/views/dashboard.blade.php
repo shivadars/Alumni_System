@@ -4,8 +4,86 @@
             
             <div class="flex flex-col lg:flex-row gap-8 items-start">
                 
-                <!-- Main Feed (Left Column - Covers more than half) -->
-                <div class="w-full lg:w-2/3 space-y-6">
+                <!-- Left Sidebar (New Navigation) -->
+                <div class="w-full lg:w-1/4 space-y-6 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pr-2 hidden lg:block" style="scrollbar-width: thin;">
+                    
+                    <!-- User Mini-Profile -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <div class="flex flex-col items-center text-center">
+                            @if(Auth::user()->profile && Auth::user()->profile->profile_picture)
+                                <img src="{{ asset('storage/' . Auth::user()->profile->profile_picture) }}" alt="{{ Auth::user()->name }}" class="w-20 h-20 rounded-full object-cover ring-4 ring-slate-50 shadow-sm mb-4">
+                            @else
+                                <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400 mb-4 ring-4 ring-slate-50">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                </div>
+                            @endif
+                            
+                            <h3 class="text-lg font-bold text-slate-900 leading-tight">{{ Auth::user()->name }}</h3>
+                            <p class="text-xs text-slate-500 font-semibold mt-1">
+                                {{ ucfirst(Auth::user()->role) }} 
+                                @if(Auth::user()->profile && Auth::user()->profile->department)
+                                    • {{ Auth::user()->profile->department }}
+                                @endif
+                            </p>
+                            
+                            <a href="{{ route('profile.show') }}" class="mt-4 w-full block text-center px-4 py-2 text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition-colors">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                        <nav class="space-y-1">
+                            <a href="{{ route('messages.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                <span class="text-sm font-semibold">Messages</span>
+                            </a>
+                            <a href="{{ route('department.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                <span class="text-sm font-semibold">Departments</span>
+                            </a>
+                            <a href="{{ route('alumni.search') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <span class="text-sm font-semibold">Alumni Directory</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="text-sm font-semibold">Events</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group mt-4 pt-4 border-t border-slate-100">
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                                <span class="text-sm font-semibold">Saved Posts</span>
+                            </a>
+                        </nav>
+                    </div>
+
+                    <!-- Trending Topics -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            Trending Topics
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            @forelse($trendingTopics as $topic)
+                                <a href="{{ route('dashboard', ['category' => $topic]) }}" class="px-3 py-1 text-[11px] font-bold rounded-full border cursor-pointer transition-colors whitespace-nowrap {{ request('category') === $topic ? 'bg-blue-600 text-white border-blue-600' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-blue-600' }}">
+                                    #{{ str_replace(' ', '', ucwords($topic)) }}
+                                </a>
+                            @empty
+                                <p class="text-xs text-slate-400 italic">No trending topics yet.</p>
+                            @endforelse
+                            @if(request('category'))
+                                <a href="{{ route('dashboard') }}" class="px-3 py-1 bg-rose-50 text-rose-600 text-[11px] font-bold rounded-full border border-rose-200 hover:bg-rose-100 cursor-pointer transition-colors whitespace-nowrap flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    Clear Filter
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Feed (Center Column) -->
+                <div class="w-full lg:w-1/2 space-y-6">
                     <!-- Feed Header -->
                     <div class="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-200">
                         <h1 class="text-3xl font-bold text-slate-900 tracking-tight">
@@ -41,9 +119,20 @@
                                             <p class="text-[10px] text-slate-400 font-semibold mt-0.5">{{ $post->created_at->format('M d, Y') }}</p>
                                         </div>
                                     </div>
-                                    <span class="px-3 py-1.5 text-[10px] font-bold rounded-full bg-blue-50 text-blue-700 uppercase tracking-widest border border-blue-100">
-                                        {{ $post->category }}
-                                    </span>
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-3 py-1.5 text-[10px] font-bold rounded-full bg-blue-50 text-blue-700 uppercase tracking-widest border border-blue-100">
+                                            {{ $post->category }}
+                                        </span>
+                                        @if(Auth::id() === $post->user_id || Auth::user()->role === 'admin')
+                                            <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors" title="Delete Post">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <!-- Post Content -->
@@ -68,10 +157,16 @@
 
                                 <!-- Post Interactions -->
                                 <div class="flex items-center gap-6 pt-6 border-t border-slate-50 text-slate-400">
-                                    <button class="flex items-center gap-2 hover:text-rose-600 transition-colors group px-1">
-                                        <svg class="w-5 h-5 group-hover:fill-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                                        <span class="font-bold text-sm">24</span>
-                                    </button>
+                                    <form action="{{ route('posts.like.toggle', $post) }}" method="POST" class="inline">
+                                        @csrf
+                                        @php
+                                            $hasLiked = $post->likes->where('user_id', auth()->id())->isNotEmpty();
+                                        @endphp
+                                        <button type="submit" class="flex items-center gap-2 hover:text-rose-600 transition-colors group px-1 {{ $hasLiked ? 'text-rose-600' : '' }}">
+                                            <svg class="w-5 h-5 {{ $hasLiked ? 'fill-current' : 'group-hover:fill-current' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                            <span class="font-bold text-sm">{{ $post->likes->count() }}</span>
+                                        </button>
+                                    </form>
                                     <button @click="showComments = !showComments" class="flex items-center gap-2 hover:text-blue-600 transition-colors px-1" :class="{ 'text-blue-600': showComments }">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                                         <span class="font-bold text-sm">{{ $post->comments->count() }}</span>
@@ -136,7 +231,7 @@
                 </div>
 
                 <!-- Sidebar (Right Column) -->
-                <div class="w-full lg:w-1/3 space-y-6 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:overflow-y-auto lg:pr-2" style="scrollbar-width: thin;">
+                <div class="w-full lg:w-1/4 space-y-6 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pr-2 hidden lg:block" style="scrollbar-width: thin;">
                     <!-- Quick Stats -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <h3 class="text-xl font-extrabold text-slate-900 mb-6 tracking-tight">Quick Stats</h3>
