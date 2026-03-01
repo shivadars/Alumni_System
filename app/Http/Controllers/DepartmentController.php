@@ -13,13 +13,11 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        // Get unique departments from profiles of alumni users
-        $departments = Profile::whereHas('user', function ($query) {
-                $query->where('role', 'alumni');
-            })
-            ->whereNotNull('department')
-            ->distinct()
-            ->pluck('department');
+        // Get registered department users
+        $departments = User::where('role', 'department')
+            ->with('profile')
+            ->orderBy('name')
+            ->get();
 
         return view('department.index', compact('departments'));
     }

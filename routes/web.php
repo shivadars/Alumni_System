@@ -87,4 +87,12 @@ Route::middleware(['auth', 'profile.complete'])->group(function () {
     Route::post('/messages/{user}', [App\Http\Controllers\MessageController::class, 'store'])->name('messages.store');
 });
 
+// Notification Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/notifications/mark-read', function() {
+        auth()->user()->unreadNotifications->markAsRead();
+        return back();
+    })->name('notifications.mark-read');
+});
+
 require __DIR__.'/auth.php';

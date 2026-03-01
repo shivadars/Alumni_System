@@ -47,7 +47,7 @@ class PostController extends Controller
             $videoPath = $request->file('video')->store('posts/videos', 'public');
         }
 
-        Post::create([
+        $post = Post::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
             'content' => $request->content,
@@ -56,6 +56,10 @@ class PostController extends Controller
             'image' => $imagePath,
             'video' => $videoPath,
         ]);
+
+        // Notify other users in the network
+        $otherUsers = \App\Models\User::where('id', '!=', Auth::id())->get();
+        \Illuminate\Support\Facades\Notification::send($otherUsers, new \App\Notifications\NewPostNotification(Auth::user()->name, $post->title));
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }

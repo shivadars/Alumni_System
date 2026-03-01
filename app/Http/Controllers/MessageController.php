@@ -91,11 +91,13 @@ class MessageController extends Controller
             'content' => 'required|string|max:1000',
         ]);
 
-        Message::create([
+        $message = Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $user->id,
             'content' => $request->content,
         ]);
+
+        $user->notify(new \App\Notifications\NewMessageNotification(Auth::user()->name, $message->content, Auth::id()));
 
         return back()->with('status', 'Message sent!');
     }

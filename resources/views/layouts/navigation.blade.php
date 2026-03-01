@@ -68,13 +68,48 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
-                <!-- Notification Bell -->
-                <button class="relative p-2 text-gray-400 hover:text-gray-600 focus:outline-none">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                    <span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
-                </button>
+                <!-- Notification Dropdown -->
+                <x-dropdown align="right" width="80">
+                    <x-slot name="trigger">
+                        <button class="relative p-2 text-gray-400 hover:text-blue-600 focus:outline-none transition-colors group" title="Notifications">
+                            <svg class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                            @php
+                                $unreadCount = Auth::user()->unreadNotifications->count();
+                            @endphp
+                            @if($unreadCount > 0)
+                                <span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white">
+                                    {{ $unreadCount > 9 ? '9+' : $unreadCount }}
+                                </span>
+                            @endif
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <div class="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-md">
+                            <span class="text-sm font-bold text-gray-700">Notifications</span>
+                            @if($unreadCount > 0)
+                                <form method="POST" action="{{ route('notifications.mark-read') }}">
+                                    @csrf
+                                    <button type="submit" class="text-xs text-blue-600 hover:text-blue-800 font-semibold hover:underline bg-transparent border-none p-0 cursor-pointer">Mark all as read</button>
+                                </form>
+                            @endif
+                        </div>
+                        <div class="max-h-[80vh] overflow-y-auto w-80" style="scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent;">
+                            @forelse(Auth::user()->notifications()->limit(15)->get() as $notification)
+                                <a href="{{ $notification->data['url'] ?? '#' }}" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0 transition-colors {{ $notification->read_at ? 'opacity-75' : 'bg-blue-50/30' }}">
+                                    <p class="text-sm text-gray-800 leading-snug {{ $notification->read_at ? '' : 'font-semibold' }}">{!! $notification->data['message'] ?? 'New notification' !!}</p>
+                                    <p class="text-[10px] text-gray-400 mt-1.5 font-bold uppercase tracking-wider">{{ $notification->created_at->diffForHumans() }}</p>
+                                </a>
+                            @empty
+                                <div class="px-4 py-8 text-center text-sm text-gray-500 font-medium">
+                                    No new notifications
+                                </div>
+                            @endforelse
+                        </div>
+                    </x-slot>
+                </x-dropdown>
 
                 <x-dropdown align="right" width="64">
                     <x-slot name="trigger">

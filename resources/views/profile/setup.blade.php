@@ -84,19 +84,23 @@
                             </div>
 
                             <!-- Roll Number -->
-                            <div>
-                                <x-input-label for="roll_number" :value="__('Roll Number / ID')" />
-                                <x-text-input id="roll_number" class="block mt-1 w-full" type="text" name="roll_number" :value="old('roll_number', $profile->roll_number ?? '')" />
-                                <x-input-error :messages="$errors->get('roll_number')" class="mt-2" />
-                            </div>
+                            @if ($user->role !== 'department')
+                                <div>
+                                    <x-input-label for="roll_number" :value="__('Roll Number / ID')" />
+                                    <x-text-input id="roll_number" class="block mt-1 w-full" type="text" name="roll_number" :value="old('roll_number', $profile->roll_number ?? '')" />
+                                    <x-input-error :messages="$errors->get('roll_number')" class="mt-2" />
+                                </div>
+                            @endif
                         </div>
 
                         <!-- Skills -->
-                        <div class="mt-4">
-                            <x-input-label for="skills" :value="__('Skills (Comma separated)')" />
-                            <x-text-input id="skills" class="block mt-1 w-full" type="text" name="skills" :value="old('skills', $profile->skills ?? '')" placeholder="PHP, Laravel, TailwindCSS" />
-                            <x-input-error :messages="$errors->get('skills')" class="mt-2" />
-                        </div>
+                        @if ($user->role !== 'department')
+                            <div class="mt-4">
+                                <x-input-label for="skills" :value="__('Skills (Comma separated)')" />
+                                <x-text-input id="skills" class="block mt-1 w-full" type="text" name="skills" :value="old('skills', $profile->skills ?? '')" placeholder="PHP, Laravel, TailwindCSS" />
+                                <x-input-error :messages="$errors->get('skills')" class="mt-2" />
+                            </div>
+                        @endif
 
                         <!-- Bio -->
                         <div class="mt-4">

@@ -39,7 +39,7 @@ class UserProfileController extends Controller
             'graduation_year' => 'nullable|required_if:role,alumni|string|max:4',
             'roll_number' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:7168',
             'phone' => 'nullable|string|max:20',
             'linkedin_url' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
@@ -83,7 +83,9 @@ class UserProfileController extends Controller
             return redirect()->route('dashboard')->with('error', 'User profile not found.');
         }
 
-        return view('profile.show', compact('user'));
+        $posts = $user->posts()->with(['user.profile', 'comments.user.profile', 'likes'])->latest()->get();
+
+        return view('profile.show', compact('user', 'posts'));
     }
 
     /**
