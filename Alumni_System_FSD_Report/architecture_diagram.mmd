@@ -1,0 +1,17 @@
+graph TD
+    Client[Web Browser / Client] <--> |HTTP/HTTPS Request & Response| Routes[Laravel Routing]
+    
+    subgraph Backend [Laravel Application]
+        Routes --> Controllers
+        Controllers --> |Business Logic| Models[Eloquent ORM Models]
+        Controllers --> |Validate| Middleware[Auth / Role Middleware]
+        Controllers <--> |Data Binding| Views[Blade Templates / Tailwind]
+    end
+    
+    Models <--> |SQL Queries| DB[(MySQL Database)]
+    
+    subgraph Storage [File System]
+        Models --> |Upload Media| Disk[Local Storage Disk]
+    end
+    
+    Client -.-> |Renders HTML| Views

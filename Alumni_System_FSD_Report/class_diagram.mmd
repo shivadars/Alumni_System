@@ -1,0 +1,52 @@
+classDiagram
+    class User {
+        +id: bigint
+        +name: string
+        +email: string
+        +role: string
+        +profile() Profile
+        +posts() Collection~Post~
+        +comments() Collection~Comment~
+        +sentMessages() Collection~Message~
+        +receivedMessages() Collection~Message~
+    }
+    class Profile {
+        +id: bigint
+        +user_id: bigint
+        +bio: string
+        +graduation_year: string
+        +major: string
+        +current_job: string
+        +user() User
+    }
+    class Post {
+        +id: bigint
+        +user_id: bigint
+        +content: string
+        +image_path: string
+        +user() User
+        +comments() Collection~Comment~
+        +likes() Collection~Like~
+    }
+    class Comment {
+        +id: bigint
+        +post_id: bigint
+        +user_id: bigint
+        +content: string
+        +post() Post
+        +user() User
+    }
+    class Message {
+        +id: bigint
+        +sender_id: bigint
+        +receiver_id: bigint
+        +content: string
+        +sender() User
+        +receiver() User
+    }
+    
+    User "1" -- "1" Profile : has
+    User "1" -- "*" Post : author
+    User "1" -- "*" Comment : writes
+    User "1" -- "*" Message : sends/receives
+    Post "1" -- "*" Comment : contains

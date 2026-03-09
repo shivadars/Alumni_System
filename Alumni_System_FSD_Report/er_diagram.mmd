@@ -1,0 +1,53 @@
+erDiagram
+    USERS ||--o| PROFILES : has
+    USERS ||--o{ POSTS : creates
+    USERS ||--o{ COMMENTS : makes
+    USERS ||--o{ MESSAGES : sends
+    USERS ||--o{ MESSAGES : receives
+    USERS ||--o{ LIKES : gives
+    POSTS ||--o{ COMMENTS : has
+    POSTS ||--o{ LIKES : receives
+
+    USERS {
+        bigint id
+        string name
+        string email
+        string password
+        string role
+        timestamp created_at
+    }
+    PROFILES {
+        bigint id
+        bigint user_id
+        string bio
+        string graduation_year
+        string major
+        string current_job
+        string profile_picture
+    }
+    POSTS {
+        bigint id
+        bigint user_id
+        string content
+        string image_path
+        timestamp created_at
+    }
+    COMMENTS {
+        bigint id
+        bigint user_id
+        bigint post_id
+        string content
+        timestamp created_at
+    }
+    MESSAGES {
+        bigint id
+        bigint sender_id
+        bigint receiver_id
+        string content
+        timestamp created_at
+    }
+    LIKES {
+        bigint id
+        bigint user_id
+        bigint post_id
+    }

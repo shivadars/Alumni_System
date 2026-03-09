@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant User
+    participant View (Blade)
+    participant Controller
+    participant Model
+    participant Database
+
+    User->>View (Blade): Submits Post Form
+    View (Blade)->>Controller: POST /posts (content, user_id)
+    Controller->>Controller: Validate Input
+    Controller->>Model: Post::create()
+    Model->>Database: INSERT INTO posts
+    Database-->>Model: Return Post ID
+    Model-->>Controller: Post Instance
+    Controller-->>View (Blade): Redirect & Success Flash
+    View (Blade)-->>User: Unread post displayed in feed

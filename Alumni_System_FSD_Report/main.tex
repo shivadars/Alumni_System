@@ -2,16 +2,14 @@
 \usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{float}% Required for inserting images
-% Add additional packages here
 \usepackage{fancyhdr} % Required for header and footer
 \usepackage{titlesec}
 \usepackage{times}
-
 \usepackage{listings}
 \usepackage{xcolor}
 
-\lstdefinestyle{csharpstyle}{
-  language=[Sharp]C,
+\lstdefinestyle{phpstyle}{
+  language=PHP,
   basicstyle=\ttfamily\small,
   keywordstyle=\color{blue},
   commentstyle=\color{gray},
@@ -23,21 +21,13 @@
   numbers=none
 }
 
-
-\usepackage{lipsum}
 \usepackage{geometry} 
-%\usepackage{hyperref} % Add this in your preamble if not already there
 \geometry{margin=1in}
-\usepackage{setspace} % Added package
-\usepackage[backend=biber,style=numeric]{biblatex}
-\addbibresource{references.bib} % Load the .bib file (ensure it's in the same directory)
+\usepackage{setspace} 
 \setcounter{secnumdepth}{4}  % Enable numbering for subsubsubsections
-\setcounter{tocdepth}{4}  % Ensure it
-% Modify chapter formattingz
+\setcounter{tocdepth}{4}  
+
 \titleformat{\chapter}[hang]{\bfseries\Large}{\thechapter\ :}{1em}{}  
-
-
-
 
 \titleformat{\chapter}
   {\vspace{-2cm} \centering\bfseries\LARGE} % Centered, bold, large font
@@ -57,50 +47,48 @@
 \newpage
 % Increase line spacing for TOC, List of Tables, and List of Figures
 \renewcommand{\baselinestretch}{1.15}  % Adjust this value for desired spacing
-\selectfont  % Apply the line spacing change
+\selectfont  
 
-% List of Tables (Centering) - Uses Roman numerals
-\addcontentsline{toc}{chapter}{LIST OF TABLES} % Adds to TOC
-\renewcommand{\listtablename}{\hfill \LARGE \textbf{LIST OF TABLES} \hfill} % Center Title
+% List of Tables 
+\addcontentsline{toc}{chapter}{LIST OF TABLES} 
+\renewcommand{\listtablename}{\hfill \LARGE \textbf{LIST OF TABLES} \hfill}
 \listoftables
 \newpage
 
-% List of Figures (Centering) - Uses Roman numerals
-\addcontentsline{toc}{chapter}{LIST OF FIGURES} % Adds to TOC
-\renewcommand{\listfigurename}{\hfill \LARGE \textbf{LIST OF FIGURES} \hfill} % Center Title
+% List of Figures 
+\addcontentsline{toc}{chapter}{LIST OF FIGURES} 
+\renewcommand{\listfigurename}{\hfill \LARGE \textbf{LIST OF FIGURES} \hfill} 
 \listoffigures
 \newpage
 
-% Table of Contents (Centering) - No numbering at all
-\renewcommand{\contentsname}{\hfill \LARGE \textbf{CONTENTS} \hfill} % Center Title
-
+% Table of Contents 
+\renewcommand{\contentsname}{\hfill \LARGE \textbf{CONTENTS} \hfill} 
 \tableofcontents
-
 
 % Start main content with Arabic numbering
 \newpage
 \pagestyle{fancy}
 \fancyhf{}  
-\fancyhead[R]{{Debug Defuse}}
+\fancyhead[R]{{Alumni Management System}}
 
-% Footer with horizontal line
-\renewcommand{\footrulewidth}{0.4pt} % Thickness of the footer line
-\fancyfoot[L]{Department of Computer Applications, MACE} % Left Footer
-\fancyfoot[R]{\thepage} % Right Footer
+% Footer 
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{Department of Computer Applications, RCSS} 
+\fancyfoot[R]{\thepage} 
 
 % Remove headers on the first page
 \fancypagestyle{plain}{%
   \fancyhf{}
-  \fancyhead[R]{{Debug Defuse}}
-  \renewcommand{\footrulewidth}{0.4pt} % Add line on first page
-  \fancyfoot[L]{Department of Computer Applications, MACE}
+  \fancyhead[R]{{Alumni Management System}}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{Department of Computer Applications, RCSS}
   \fancyfoot[R]{\thepage}
 }
 % Define a page style without header and footer
 \fancypagestyle{noheaderfooter}{
-    \fancyhf{} % Clear header and footer
-    \renewcommand{\headrulewidth}{0pt} % Remove header line
-    \renewcommand{\footrulewidth}{0pt} % Remove footer line
+    \fancyhf{} 
+    \renewcommand{\headrulewidth}{0pt} 
+    \renewcommand{\footrulewidth}{0pt} 
 }
 \pagenumbering{arabic}
 
@@ -115,11 +103,5 @@
 \include{8_Conclusion}
 \include{9_Future_works}
 \include{10_Appendix}
-
-% Bibliography Section
-\renewcommand{\bibname}{11 REFERENCES } 
-\addcontentsline{toc}{chapter}{11 REFERENCES }  % Adds "References" to ToC
-
-
 
 \end{document}

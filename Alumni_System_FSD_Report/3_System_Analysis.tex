@@ -1,142 +1,137 @@
 \chapter{SYSTEM ANALYSIS }
-
+ 
 \section{Module Description}
-The "Alumni System" is a comprehensive web networking platform designed specifically to connect students, alumni, departments, and administrators. The system is divided into multiple functional modules to ensure a seamless experience:
+The Alumni Management System is divided into multiple functional modules to ensure a structured and scalable application. The main modules include:
 \begin{itemize}
-    \item \textbf{Authentication \& Authorization Module:} Handles user registration, secure login, password resets, and role-based access control (Admin, Alumni, Student, Department). It ensures only verified users gain access to the platform's core features.
-    \item \textbf{Profile Management Module:} Allows users to create detailed profiles containing their personal information, academic background (department, graduation year, roll number), skills, current employment, and social links (like LinkedIn). It supports profile pictures and varied layouts dynamically adjusting based on the user's role.
-    \item \textbf{Networking \& Feed Module:} The core engaging feature where users can create posts (including text, images, and videos) visible to their network. Other users can interact with these posts by "Liking" them or leaving comments, similar to professional networks like LinkedIn.
-    \item \textbf{Direct Messaging Module:} Provides a real-time private chat interface allowing direct communication between any two users in the system. It tracks read/unread statuses and displays conversations in an intuitive interface.
-    \item \textbf{Notification Module:} A sophisticated universal notification engine that polls system activities and alerts users about relevant updates. It triggers database notifications for new direct messages and new network posts, accessible instantly via a top-navigation dropdown menu.
-    \item \textbf{Search \& Discovery Module:} Allows users to find and connect with peers by searching for specific alumni or filtering the network based on departments, graduation years, or skills.
-    \item \textbf{Department \& Admin Module:} Provides administrative oversight. Admins can approve or reject new user registrations to maintain an exclusive network, while Departments have their own dedicated interfaces to view alumni belonging to their specific branches.
+    \item \textbf{Authentication \& Authorization Module:} Handles user registration, login, and secure session management. Utilizing Laravel Breeze, this module ensures secure password hashing and role-based access control (Admin, Alumni, Student, Department).
+    \item \textbf{Profile Management Module:} Allows users to update their personal and professional details. Users must complete their profile before accessing the core features of the system.
+    \item \textbf{Post \& Comment Module:} Acts as the primary social feed. Users can create posts, upload media (images/videos), like posts, and engage in threaded discussions through comments.
+    \item \textbf{Private Messaging Module:} Enables users to send direct messages to one another. This module ensures privacy and secure peer-to-peer communication.
+    \item \textbf{Alumni Search Directory Module:} Provides an advanced search interface for finding alumni by various filters such as graduation year, department, and current profession.
+    \item \textbf{Admin & Moderation Module:} Dedicated dashboards for platform administrators to approve new alumni registrations, manage user accounts, and oversee the platform's overall health and content.
+    \item \textbf{Department Module:} Specialized dashboards for department heads to view and manage the alumni network specific to their faculty.
 \end{itemize}
-
-\subsection{Module Summary Table}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{10cm}|}
-        \hline
-        \textbf{Module Name} & \textbf{Primary Purpose} \\ \hline
-        Authentication & Secure user access and role validation. \\ \hline
-        Profile Management & User biography, academic, and skills data. \\ \hline
-        Networking Feed & Public updates, posts, and interactive comments. \\ \hline
-        Direct Messaging & Real-time private 1-on-1 communication. \\ \hline
-        Notifications & Universal alerts for new messages and posts. \\ \hline
-        Admin/Department & User moderation and alumni tracking interfaces. \\ \hline
-    \end{tabular}
-    \caption{Summary of System Modules}
-    \label{tab:modules}
-\end{table}
 
 \section{Business Rules}
-Business rules are specific guidelines that govern the operations of the Alumni System to ensure consistency, security, and alignment with institutional goals.\\\\
-\textbf{User Registration \& Verification}
+
+Business rules define how processes and activities should be conducted to ensure consistency across the application.
 \begin{itemize}
-    \item All new user registrations (except initial Super Admins) require administrative approval before they are fully active in the system.
-    \item A user must complete their basic Profile Setup—including required fields like Department and Roll Number—before accessing the main dashboard and networking features.
+    \item \textbf{Profile Completeness:} Users cannot actively participate in writing posts or sending messages until their core profile fields (such as graduation year and current job) are filled out. This ensures data integrity within the platform.
+    \item \textbf{Role Permissions:} Only Administrators can approve or reject new alumni registrations. Regular students and alumni cannot perform administrative actions across the network.
+    \item \textbf{Alumni Independence:} Alumni data belongs to the alumni. The platform cannot publicly expose their private email addresses; instead, peer-to-peer communication must flow through the internal messaging system.
 \end{itemize}
 
-\textbf{Content \& Interactions}
+\section{Use Case Model}
+The Use Case Model identifies the key interactions between the primary actors (Guest, Student, Alumni, Department, Admin) and the platform.
+
+\subsection{Use Case Descriptions}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{1cm}|p{4cm}|p{10cm}|}
+        \hline
+        \textbf{ID} & \textbf{Use Case} & \textbf{Description} \\
+        \hline
+        UC01 & Register \& Login & Users create a new account or authenticate with existing credentials. \\
+        \hline
+        UC02 & Manage Profile & Users update their biographical and professional metadata. \\
+        \hline
+        UC03 & Search Alumni Network & Users filter and discover alumni based on specific criteria. \\
+        \hline
+        UC04 & Create Post & Amplifies network reach by publishing multimedia posts. \\
+        \hline
+        UC05 & Comment \& Like & Users engage with published posts via comments and likes. \\
+        \hline
+        UC06 & Send Private Message & Users communicate directly and securely with their peers. \\
+        \hline
+        UC07 & Approve New Alumni & Administrators manually verify and approve incoming registrations. \\
+        \hline
+    \end{tabular}
+    \caption{Use Case Descriptions}
+    \label{tab:use_cases}
+\end{table}
+
+\subsection{Use Case Diagram}
+The following diagram visually represents the interactions between the primary actors and system use cases.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{use_case.png}
+    \caption{Use Case Diagram for Alumni Management System}
+    \label{fig:use_case}
+\end{figure}
+
+\section{Analysis of Architecture}
+
+\subsection{Laravel Framework (PHP 8.2)}
+The Alumni Management System is built natively on the Laravel 12.x PHP framework, utilizing an MVC architecture to guarantee clean, scalable, and secure application code.
 \begin{itemize}
-    \item Only verified users can create posts, like existing posts, or leave comments.
-    \item Users can only delete posts that they have authored themselves. Administrators hold global privileges to delete any inappropriate posts across the network.
-    \item Multimedia uploads are strictly validated: images must be formatted properly and not exceed 10MB, while videos must be under 50MB.
+    \item \textbf{Backend Architecture (MVC):} The Model layer handles relational MySQL queries preventing SQL injection. The Controller isolates business logic (e.g., verifying user profile states), and the Blade View layer handles dynamic DOM rendering.
+    \item \textbf{Frontend Utility Styling:} Tailwind CSS serves as a robust utility engine preventing cross-component cascading errors and vastly reducing custom CSS payload sizes.
 \end{itemize}
 
-\textbf{Networking \& Privacy}
-\begin{itemize}
-    \item Private messages can only be sent between registered and active users.
-    \item A read-receipt system ensures users know when their messages have been seen.
-    \item Certain profile fields, such as Roll Numbers and specific Academic details, are deliberately hidden for users holding 'Department' and 'Admin' roles to ensure the interface remains clean and relevant to their status.
-\end{itemize}
+\subsection{Key Algorithms}
 
-\newpage
-\section{Analysis of Architecture (and/ or) Algorithms}
-{\large \textbf{Laravel PHP Framework}}\\\\
-The Alumni System is built on Laravel, a robust and elegant PHP web framework. Laravel provides the foundation for secure routing, MVC architecture, and database interactions, ensuring a scalable and maintainable networking platform.\\\\
-\begin{enumerate}
-    \item \textbf{MVC Architecture:}
-    \begin{itemize}
-        \item \textbf{Models:} Eloquent ORM is used for seamless database interactions mapping directly to tables like \texttt{users}, \texttt{profiles}, \texttt{posts}, \texttt{messages}, and \texttt{notifications}.
-        \item \textbf{Views:} Blade templating engine renders dynamic UI components safely and efficiently.
-        \item \textbf{Controllers:} Handle the core business logic, from authenticating users to processing new post submissions and real-time messaging data.
-    \end{itemize}
-    \item \textbf{Database Migrations \& Relationships:}
-    \begin{itemize}
-        \item Laravel’s migration system ensures the PostgreSQL database schema is version-controlled.
-        \item Complex eloquent relationships (e.g., User \texttt{hasOne} Profile, User \texttt{hasMany} Posts) allow for rapid data retrieval, such as loading a user's entire feed of posts alongside their profile picture.
-    \end{itemize}
-    \item \textbf{Security:}
-    \begin{itemize}
-        \item Built-in CSRF protection safeguards all forms.
-        \item Passwords are cryptographically hashed, and SQL injection is prevented automatically through Eloquent's prepared statements.
-    \end{itemize}
-\end{enumerate}
+\textbf{Profile Completion Check Algorithm:}
+To maintain a high quality of data within the alumni network, a custom Middleware algorithm evaluates the user's Eloquent Profile model upon every critical HTTP request. The algorithm checks if essential columns (graduation year, major) are strictly strictly `!== null`. If any are unset, it forcefully intercepts the request and redirects the user to the profile configuration form, regardless of their intended target route. \\
 
-\textbf{Why Laravel for the Alumni System?}\\\\
-Laravel provides a comprehensive web development framework that ensures rapid deployment, high security, and elegant code structure. Its built-in ecosystem handles complex requirements like Authentication and Notifications out-of-the-box, making it the ideal choice for a feature-rich social network.
+\textbf{Alumni Search \& Filter Algorithm:}
+The alumni directory employs an advanced dynamic query construction algorithm. Based on optional GET parameters (e.g., specific graduating class, department identifier, or job title keyword), the Controller appends conditional `where()` clauses sequentially to the central base Eloquent query before invoking the `paginate()` termination method. This ensures minimal database load by only targeting explicitly requested indices.
+
+\section{Activity Diagram}
+The Activity Diagram illustrates the workflow an actor follows when navigating to the Alumni platform, transitioning between feeds, profiles, and directories.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{activity_diagram.png}
+    \caption{Activity Diagram for the Alumni Platform}
+    \label{fig:activity}
+\end{figure}
 
 \section{Feasibility Analysis}
-
+ 
 \subsection{Technical Feasibility}
-Technical feasibility assesses whether a project can be successfully developed and implemented using the current available technology, skills, and resources.\\\\
-\noindent
-The chosen tech stack for the Alumni System—Laravel (PHP), TailwindCSS, and PostgreSQL—is highly feasible and aligns perfectly with modern web development standards. The backend infrastructure easily supports complex relational data required for social networking (users, posts, likes, messages). The frontend utilizes TailwindCSS for a responsive, modern, "LinkedIn-style" UI that works flawlessly across desktop and mobile devices.
+The system is built on a modern, robust technology stack. The backend utilizes the Laravel PHP framework, known for its elegant syntax, built-in security features, and powerful Eloquent ORM. The frontend leverages Laravel Blade templating engine coupled with Tailwind CSS, ensuring a responsive and modern user interface. Vite is used as the frontend build tool for rapid development. The data is managed using a MySQL database, providing a reliable and scalable storage solution for relational data. Given the well-documented nature of these technologies, the project is highly technically feasible.
 
 \subsection{Economical Feasibility}
-Economic feasibility refers to the assessment of the financial aspects of a project to determine whether it is cost-effective and viable.\\\\
-\noindent
-The project demonstrates strong economic viability. By utilizing free, open-source technologies (PHP, Laravel, PostgreSQL, TailwindCSS), licensing costs are virtually eliminated. The application can be hosted on very affordable cloud providers (like DigitalOcean or AWS EC2) using simple standardized deployment pipelines. Future maintenance is cost-effective due to Laravel’s vast developer community and extensive documentation.
+The development and deployment of the Alumni Management System are highly cost-effective. The chosen technologies (PHP, Laravel, MySQL, Tailwind) are open-source and free to use. Hosting can be achieved on affordable cloud platforms or dedicated VPS servers without incurring massive costs. Maintenance and future scaling are straightforward due to Laravel's popularity and community support.
 
 \subsection{Operational Feasibility}
-Operational feasibility evaluates whether the project aligns with operational requirements and whether it can be smoothly integrated into existing processes.\\\\
-\noindent
-The system is operationally sound. It replaces manual alumni tracking and networking with an automated, user-friendly digital platform. Features like Admin Approval for new accounts ensure the network remains secure and exclusive to actual students and graduates. The dynamic dashboard, instant search, and real-time notifications ensure users remain engaged and can operate the platform intuitively without prior training.
+The system is designed with a user-centric approach. The clean, intuitive interface makes it simple for non-technical users to navigate. Automated workflows, such as profile completion checks and notification alerts, guide the user seamlessly through the platform. For administrators, the dedicated dashboards significantly reduce the manual effort required to manage an alumni network.
 
 \section{System Environment}
-
+ 
 \subsection{Software Environment}
-\textbf{Backend Framework:}\\
-Laravel 11.x (PHP 8.2+) serves as the core framework for logic, routing, and database interaction.\\\\
-\textbf{Frontend Styling:}\\
-Tailwind CSS, Blade Templates, minimal Vanilla JavaScript for interactivity (like dropdowns and modals).\\\\
-\textbf{Database Management:}\\
-PostgreSQL for relational data mapping of users, messages, and posts.\\\\
-\textbf{Development Environment:}\\
-Artisan Serve and Vite (for asset bundling and hot-module replacement). Git and GitHub are used for version control.
+\textbf{Frontend:} HTML, Tailwind CSS, JavaScript, Alpine.js, Blade Templates \\
+\textbf{Backend Framework:} Laravel (PHP) \\
+\textbf{Database:} MySQL \\
+\textbf{Build Tools:} Vite, Node.js, npm \\
+\textbf{Version Control:} Git \\
+\textbf{Environment:} Windows / Linux Server (Production)
 
 \subsection{Hardware Environment}
-\textbf{Processor (CPU):} 2 Cores (e.g., Intel Xeon or AWS T3)\\\\
-\textbf{Memory (RAM):} 4 GB minimum\\\\
-\textbf{Storage:} 50 GB SSD (to accommodate user uploads like Profile Pictures, Post Images, and Videos)\\\\
-\textbf{Operating System:} Ubuntu 22.04 LTS (or similar Linux distribution)
+\textbf{Processor (CPU):} Dual Core 2.0 GHz or higher \\
+\textbf{Memory (RAM):} 4 GB Memory minimum \\
+\textbf{Storage:} 10 GB SSD for hosting and database \\
+\textbf{Operating System:} Cross-Platform (Web Browser based)
 
-\newpage
+\section{Actors and Roles}
+The system involves four primary actors: \\
 
-\section{Actors and roles}
-The system involves four primary actors:\\\\
-\noindent
-\textbf{Actors name: Admin}\\\\
-\textbf{Role:} 
+\noindent \textbf{Admin}
 \begin{itemize}
-    \item Has full oversight of the platform. Their primary responsibility is approving or rejecting new user registrations and moderating content (deleting inappropriate posts).
+    \item Approves or rejects new alumni registrations.
+    \item Manages global platform settings and content moderation.
 \end{itemize}
-\noindent
-\textbf{Actors name: Alumni}\\\\
-\textbf{Role:} 
+\noindent \textbf{Alumni}
 \begin{itemize}
-    \item Graduates of the institution. They can create posts, update their employment profiles, message other users, and search the network for connections.
+    \item Can post updates, search the directory, and message other users.
+    \item Acts as the core user base for networking and mentorship.
 \end{itemize}
-\noindent
-\textbf{Actors name: Student}\\\\
-\textbf{Role:} 
+\noindent \textbf{Student}
 \begin{itemize}
-    \item Current attendees of the institution. They use the platform to seek mentorship, view alumni careers, and stay updated via the global feed.
+    \item Engages with alumni posts and seeks mentorship through private messages.
 \end{itemize}
-\noindent
-\textbf{Actors name: Department}\\\\
-\textbf{Role:} 
+\noindent \textbf{Department}
 \begin{itemize}
-    \item Represents specific academic faculty branches. They can view directories of all alumni that graduated from their specific department to track placements and success.
+    \item Views metrics and manages alumni specific to their department.
 \end{itemize}

@@ -1,34 +1,227 @@
 \chapter{SYSTEM DESIGN }
 
-\section{Use case model}
+\section{Project Architecture}
+The Alumni Management System follows the Model-View-Controller (MVC) architectural pattern:
+\begin{itemize}
+    \item \textbf{Model:} Eloquent classes define the core entities (User, Profile, Post, Comment, Message) and abstract database interactions.
+    \item \textbf{View:} Blade templates combined with Tailwind CSS render the dynamic HTML interfaces presented to the users.
+    \item \textbf{Controller:} Handles incoming HTTP requests, processes business logic, and returns the appropriate View or JSON response.
+\end{itemize}
+Laravel’s routing engine directs incoming traffic to specific controllers, while middleware ensures secure access control (e.g., verifying user roles or profile completion status before allowing access).
+
+\section{User Interface (UI) Design}
+The Alumni Management System provides a clean and responsive user interface designed using Tailwind CSS. The platform ensures ease of navigation for alumni, students, and administrators. Key interfaces include the landing page, authentication screens, and the main dashboard for interacting with the community.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=1\textwidth,height=0.6\textwidth]{use_case.png} % Place your actual image here
-    \framebox[1\textwidth]{\rule{0pt}{0.4\textwidth} \Huge Placeholder for Use Case Diagram}
-    \caption{Use case Diagram}
-    \label{fig:Use_case}
+    \includegraphics[width=0.9\textwidth]{landing_page.png}
+    \caption{Main Landing Page}
+    \label{fig:landing_page}
 \end{figure}
-The use case model defines the core interactions between actors and the system, detailing workflows such as user registration and direct messaging.
 
-\section{Project Design}
-System design is the process of defining the architecture, components, interfaces, and other characteristics of a system or component. For the Alumni System, the design focuses on creating an intuitive networking environment reminiscent of professional platforms like LinkedIn.\\\\
-In the Alumni System, the design focuses on ensuring that user interactions—such as making a post or sending a message—are fast and responsive. The interface dynamically adapts depending on whether the user is an Admin, a Student, or a Department to ensure optimal usability.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{login_page.png}
+    \caption{User Login Interface}
+    \label{fig:login_page}
+\end{figure}
 
-\subsection{UI Design}
-The User Interface is designed with a "vibrant, modern, and professional" aesthetic.
-\begin{itemize}
-    \item \textbf{Dashboard:} Features a clean, single-column feed of interactive Post Cards, allowing users to scroll through updates smoothly.
-    \item \textbf{Navigation:} A sticky top navigation bar houses rapid-access tools: a global search bar, profile picture dropdown, and a dynamic Notification Bell that reveals recent activity.
-    \item \textbf{Profiles:} Rendered as stacked cards, clearly separating "About", "Academic Background", "Skills", and the user's historical "Activity/Posts".
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{register_page.png}
+    \caption{Account Registration Page}
+    \label{fig:register_page}
+\end{figure}
 
-\subsection{Post \& Feed Design}
-The design of the content feed prioritizes visual engagement. The system uses a centralized reusable Blade component (\texttt{post-card.blade.php}) ensuring that whether a post is viewed on the main Dashboard or on a specific User's Profile, it looks completely identical and professional. Posts support rich media (images and videos) and feature interactive elements for Liking and Commenting, styled with SVG icons and subtle hover animations for a premium feel.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dashboard_page.png}
+    \caption{Student/Alumni Dashboard Overview}
+    \label{fig:dashboard_page}
+\end{figure}
 
-\subsection{Notification System Design}
-The Notification engine shifts away from basic manual database queries to an integrated, universal alert system. 
-\begin{itemize}
-    \item \textbf{Implementation:} Utilizing Laravel's built-in \texttt{Notification} facade and the \texttt{database} channel.
-    \item \textbf{Triggers:} Custom Notification classes (\texttt{NewMessageNotification}, \texttt{NewPostNotification}) are fired directly from the Controllers when a successful action occurs.
-    \item \textbf{User Experience:} These raw database alerts are beautifully rendered via a custom dropdown menu in the navigation bar, formatting timestamps dynamically (e.g., "5 minutes ago") and visually bolding unread items. A one-click "Mark as Read" instantly clears the user's queue.
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{messages_page.png}
+    \caption{Real-Time Messaging Interface}
+    \label{fig:messages_page}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{directory_page.png}
+    \caption{Alumni/Student Directory}
+    \label{fig:directory_page}
+\end{figure}
+
+\section{System Architecture Diagram}
+The System Architecture diagram maps the communication pathways between the frontend client, the backend Laravel framework, the storage mechanisms, and the MySQL database layer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{architecture_diagram.png}
+    \caption{System Architecture Diagram}
+    \label{fig:architecture}
+\end{figure}
+
+\section{Class Diagram}
+The Class Diagram models the core structural components of the Alumni Management System, including the primary entities and their respective responsibilities inside the object-oriented architecture.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{class_diagram.png}
+    \caption{System Class Diagram}
+    \label{fig:class_diagram}
+\end{figure}
+
+\section{Entity-Relationship (ER) Diagram}
+The ER Diagram illustrates the logical data architecture stored within the MySQL database. It highlights how user authenticated identities correspond relationally to their profiles, posts, and chat histories.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{er_diagram.png}
+    \caption{Entity-Relationship (ER) Diagram}
+    \label{fig:er_diagram}
+\end{figure}
+
+\section{Sequence Diagram}
+The Sequence Diagram traces the synchronous execution paths when a user interacts with primary features, such as submitting a new post to the feed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{sequence_diagram.png}
+    \caption{Sequence Diagram: Creating a Post}
+    \label{fig:sequence}
+\end{figure}
+
+\section{Project Pipeline}
+The Project Pipeline outlines the systematic development workflow followed during the creation of the platform, from initial requirements gathering through final deployment.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pipeline_diagram.png}
+    \caption{Project Development Pipeline}
+    \label{fig:pipeline}
+\end{figure}
+
+\section{Database Design}
+Data storage is engineered relationally via MySQL. The database schema consists of several core tables.
+
+\subsection{Users Table}
+The \texttt{users} table stores the central authentication details and role pointers for the system.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
+        \hline
+        id & BigInt & Primary Key, Auto-increment \\
+        \hline
+        username & String & Unique username for login and display \\
+        \hline
+        email & String & Unique email address \\
+        \hline
+        password & String & Bcrypt Hashed password \\
+        \hline
+        role & String & User role (admin, alumni, student, department) \\
+        \hline
+        created\_at & Timestamp & Record creation date \\
+        \hline
+        updated\_at & Timestamp & Record last modification date \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.2cm}
+    \caption{Users Table Schema}
+    \label{tab:users_schema}
+\end{table}
+
+\subsection{Profiles Table}
+The \texttt{profiles} table stores detailed biographical and professional data linked uniquely to a user.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
+        \hline
+        id & BigInt & Primary Key, Auto-increment \\
+        \hline
+        user\_id & BigInt & Foreign Key referencing Users table \\
+        \hline
+        bio & Text & User biography / summary \\
+        \hline
+        graduation\_year & String & The year the alumni graduated \\
+        \hline
+        major & String & The department or major of the student/alumni \\
+        \hline
+        current\_job & String & Current employment title \\
+        \hline
+        profile\_picture & String & Path to the uploaded profile avatar \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.2cm}
+    \caption{Profiles Table Schema}
+    \label{tab:profiles_schema}
+\end{table}
+
+\subsection{Posts Table}
+Stores user-generated content for the global feed.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
+        \hline
+        id & BigInt & Primary Key, Auto-increment \\
+        \hline
+        user\_id & BigInt & Foreign Key referencing Users table \\
+        \hline
+        content & LongText & The main text body of the post \\
+        \hline
+        image\_path & String & Path to any attached media \\
+        \hline
+        created\_at & Timestamp & Post creation timestamp \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.2cm}
+    \caption{Posts Table Schema}
+    \label{tab:posts_schema}
+\end{table}
+
+\subsection{Messages Table}
+Stores direct peer-to-peer chat logs securely.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
+        \hline
+        id & BigInt & Primary Key, Auto-increment \\
+        \hline
+        sender\_id & BigInt & Foreign Key referencing Users table \\
+        \hline
+        receiver\_id & BigInt & Foreign Key referencing Users table \\
+        \hline
+        content & Text & The message payload \\
+        \hline
+        is\_read & Boolean & Flag indicating if receiver viewed the message \\
+        \hline
+        created\_at & Timestamp & Message delivery timestamp \\
+        \hline
+    \end{tabular}
+    }
+    \vspace{0.2cm}
+    \caption{Messages Table Schema}
+    \label{tab:messages_schema}
+\end{table}
+

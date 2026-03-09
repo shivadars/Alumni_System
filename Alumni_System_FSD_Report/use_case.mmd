@@ -1,0 +1,47 @@
+flowchart LR
+    subgraph Alumni Management System
+        UC1[Register & Login]
+        UC2[Manage Profile]
+        UC3[Search Alumni Network]
+        UC4[Create Post]
+        UC5[Comment & Like on Posts]
+        UC6[Send Private Message]
+        UC7[Approve New Alumni]
+        UC8[Manage Users & Roles]
+        UC9[View Department Analytics]
+    end
+
+    Guest((Guest))
+    Student((Student))
+    Alumni((Alumni))
+    Admin((Admin))
+    Department((Department))
+
+    Guest --> UC1
+    
+    Student --> UC1
+    Student --> UC2
+    Student --> UC3
+    Student --> UC5
+    Student --> UC6
+    
+    Alumni --> UC1
+    Alumni --> UC2
+    Alumni --> UC3
+    Alumni --> UC4
+    Alumni --> UC5
+    Alumni --> UC6
+    
+    Department --> UC1
+    Department --> UC2
+    Department --> UC3
+    Department --> UC9
+    
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC4
+    Admin --> UC5
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8

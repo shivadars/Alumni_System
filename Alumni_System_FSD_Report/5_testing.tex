@@ -1,0 +1,100 @@
+\chapter{TESTING}
+
+Software testing is an essential phase in the software development lifecycle, ensuring that the final product meets the defined requirements and is free of defects. In the Alumni Management System, a combination of manual and automated testing strategies was employed.
+
+\section{Testing Principles}
+Testing aims to identify bugs, verify the logic, and validate user experience. The primary objectives are:
+\begin{enumerate}
+    \item Uncover defects and logic errors in the code.
+    \item Ensure that the system handles edge cases gracefully without crashing.
+    \item Verify that unauthorized users cannot access protected routes.
+    \item Validate the performance and responsiveness of the user interface.
+\end{enumerate}
+
+\section{Testing Methodologies}
+
+\subsection{Unit Testing}
+Unit testing involves verifying the smallest testable parts of the application, typically individual functions or Eloquent model relationships.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        UT01 & User Model & Verify that a User correctly relates to one Profile. & Returns Profile instance & Pass \\
+        \hline
+        UT02 & Post Model & Verify that a Post correctly fetches its Author (User). & Returns User instance & Pass \\
+        \hline
+        UT03 & Validation Engine & Submit an empty registration form. & Form returns strict validation errors & Pass \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Unit Test Cases for Alumni System}
+    \label{tab:unit_tests}
+\end{table}
+
+\subsection{Integration Testing}
+Integration testing validates how individual modules work together when combined.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        IT01 & Post Creation & Submit a valid POST request to create a post. & Post is saved to DB and feed updates & Pass \\
+        \hline
+        IT02 & Profile Completion & Access feed without completing profile setup. & User is redirected to Profile Setup page & Pass \\
+        \hline
+        IT03 & Like System & Click the like button on an existing post. & Like count increments in DB and UI & Pass \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Integration Test Cases for Alumni System}
+    \label{tab:integration_tests}
+\end{table}
+
+\subsection{System Testing}
+System tests simulate real user interactions via HTTP requests to ensure entire features work correctly end-to-end.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        ST01 & Authentication & Complete registration, login, and logout flow. & Sessions are created and destroyed successfully & Pass \\
+        \hline
+        ST02 & Authorization & Regular student attempts to access Admin dashboard. & System returns 403 Access Denied & Pass \\
+        \hline
+        ST03 & Messaging & User A sends a private message to User B. & Message appears in both users' inboxes & Pass \\
+        \hline
+    \end{tabular}
+    }
+    \caption{System Test Cases for Alumni System}
+    \label{tab:system_tests}
+\end{table}
+
+\subsection{Performance Testing}
+Performance tests validate the responsiveness of the user interface and database load times.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
+        \hline
+        \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
+        \hline
+        PT01 & Initial Load & Measure TTFB (Time to First Byte) on Landing Page. & TTFB is under 200ms & Pass \\
+        \hline
+        PT02 & Directory Search & Perform a complex alumni search with multiple filters. & Results return and paginate within 500ms & Pass \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Performance Test Cases for Alumni System}
+    \label{tab:performance_tests}
+\end{table}

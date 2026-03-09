@@ -1,0 +1,19 @@
+\chapter{GIT HISTORY}
+
+Version control is an indispensable tool in modern software engineering, ensuring source code tracking, collaborative management, and disaster recovery. The Alumni Management System was continuously version-controlled using Git, with changes pushed iteratively to a remote GitHub repository.
+
+\section{Repository Build History}
+The build history is characterized by atomic commits detailing specific feature implementations and bug fixes. Below is a structured summary of the core development milestones documented within the Git commit history:
+
+\begin{itemize}
+    \item \textbf{Initial Commit \& Laravel Setup:} Bootstrapped the Laravel 12.x application, initialized Vite for frontend assets, and configured the `.env` database parameters.
+    \item \textbf{Authentication Scaffold:} Integrated Laravel Breeze to automatically generate the registration, login, and password reset flows. Addressed mass assignment variables for the `username` field.
+    \item \textbf{Database Migrations:} Created migration files for `Profiles`, `Posts`, `Comments`, and `Messages`. Defined foreign keys establishing relationships back to the `Users` table.
+    \item \textbf{Profile Completeness Middleware:} Implemented custom middleware enforcing new users to complete their profile setup before accessing the dashboard or feed functionalities.
+    \item \textbf{Post \& Comment Engine:} Commits focused on enabling users to create text posts, upload images, and append nested comments using Eloquent relationships.
+    \item \textbf{UI Integration (Tailwind):} Overhauled the raw Blade templates using Tailwind CSS for responsive formatting, standardizing the application aesthetic.
+    \item \textbf{Alumni Search Directory:} Added Controller methods and Blade views to allow users to search and filter alumni by graduation year and major.
+    \item \textbf{Role Management (Admin/Department):} Implemented role-checking logic protecting specific dashboard routes meant strictly for platform administrators and department heads.
+\end{itemize}
+
+By relying on standard Git practices, the project evolved safely via feature branches, allowing experimental features to be tested before being merged into the primary production branch.
