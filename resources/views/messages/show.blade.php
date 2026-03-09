@@ -27,7 +27,6 @@
                                             {{ substr($conversation->name, 0, 1) }}
                                         </div>
                                     @endif
-                                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm ring-1 ring-white"></div>
                                 </div>
                                 
                                 <div class="flex-grow min-w-0">
@@ -75,14 +74,9 @@
                                         {{ substr($user->name, 0, 1) }}
                                     </div>
                                 @endif
-                                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                             </div>
                             <div>
                                 <h3 class="text-lg font-black text-slate-900 tracking-tight leading-none mb-1">{{ $user->name }}</h3>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                    Active now
-                                </p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-slate-400">

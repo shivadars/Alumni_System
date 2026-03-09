@@ -19,6 +19,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@hotwired/turbo": "^8.0.23",
         "@playwright/test": "^1.58.2",
         "playwright": "^1.58.2"
     }

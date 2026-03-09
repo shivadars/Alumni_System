@@ -53,17 +53,32 @@
     </div>
 
     <!-- Post Interactions -->
-    <div class="flex items-center gap-6 pt-6 border-t border-slate-50 text-slate-400">
-        <form action="{{ route('posts.like.toggle', $post) }}" method="POST" class="inline">
-            @csrf
-            @php
-                $hasLiked = $post->likes->where('user_id', auth()->id())->isNotEmpty();
-            @endphp
-            <button type="submit" class="flex items-center gap-2 hover:text-rose-600 transition-colors group px-1 {{ $hasLiked ? 'text-rose-600' : '' }}">
-                <svg class="w-5 h-5 {{ $hasLiked ? 'fill-current' : 'group-hover:fill-current' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                <span class="font-bold text-sm">{{ $post->likes->count() }}</span>
-            </button>
-        </form>
+    <div x-data="{ 
+        liked: {{ $post->likes->where('user_id', auth()->id())->isNotEmpty() ? 'true' : 'false' }},
+        likesCount: {{ $post->likes->count() }},
+        toggleLike() {
+            fetch('{{ route('posts.like.toggle', $post) }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.liked = data.liked;
+                this.likesCount = data.likes_count;
+            })
+            .catch(error => {
+                console.error('Error toggling like:', error);
+            });
+        }
+    }" class="flex items-center gap-6 pt-6 border-t border-slate-50 text-slate-400">
+        <button @click="toggleLike()" type="button" class="flex items-center gap-2 hover:text-rose-600 transition-colors group px-1" :class="{ 'text-rose-600': liked }">
+            <svg class="w-5 h-5" :class="{ 'fill-current': liked, 'group-hover:fill-current': !liked }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <span class="font-bold text-sm" x-text="likesCount"></span>
+        </button>
         <button @click="showComments = !showComments" class="flex items-center gap-2 hover:text-blue-600 transition-colors px-1" :class="{ 'text-blue-600': showComments }">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             <span class="font-bold text-sm">{{ $post->comments->count() }}</span>

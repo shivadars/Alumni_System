@@ -21,7 +21,7 @@ class DashboardController extends Controller
         if (in_array($user->role, ['student', 'alumni', 'department'])) {
             $department = $user->profile->department;
             $query->where(function ($q) use ($department) {
-                $q->whereRaw('LOWER(department) = LOWER(?)', [$department])
+                $q->whereRaw('LOWER(department) LIKE ?', ['%' . strtolower($department) . '%'])
                   ->orWhereHas('user', function ($u) {
                       $u->where('role', 'admin');
                   });

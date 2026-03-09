@@ -27,7 +27,6 @@
                                             {{ substr($conversation->name, 0, 1) }}
                                         </div>
                                     @endif
-                                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm ring-1 ring-white"></div>
                                 </div>
                                 
                                 <div class="flex-grow min-w-0">

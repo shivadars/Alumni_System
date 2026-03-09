@@ -13,19 +13,19 @@ class AlumniSearchController extends Controller
 
         // Search by Name (User table)
         if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->name) . '%']);
         }
 
         // Search by Profile fields
         $query->whereHas('profile', function ($q) use ($request) {
             if ($request->filled('department')) {
-                $q->where('department', 'like', '%' . $request->department . '%');
+                $q->whereRaw('LOWER(department) LIKE ?', ['%' . strtolower($request->department) . '%']);
             }
             if ($request->filled('graduation_year')) {
                 $q->where('graduation_year', $request->graduation_year);
             }
             if ($request->filled('company')) {
-                $q->where('company', 'like', '%' . $request->company . '%');
+                $q->whereRaw('LOWER(company) LIKE ?', ['%' . strtolower($request->company) . '%']);
             }
         });
 
