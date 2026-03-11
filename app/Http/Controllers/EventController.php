@@ -16,7 +16,13 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        return view('events.show', compact('event'));
+        $otherEvents = Event::where('id', '!=', $event->id)
+            ->where('event_date', '>=', now())
+            ->orderBy('event_date', 'asc')
+            ->limit(3)
+            ->get();
+            
+        return view('events.show', compact('event', 'otherEvents'));
     }
 
     public function create()
