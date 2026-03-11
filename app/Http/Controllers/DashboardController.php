@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,18 +29,29 @@ class DashboardController extends Controller
             });
         }
 
-        $posts = $query->get();
+        $posts = $query->paginate(10);
         
-        // Stats for sidebar
-        $alumniNetworkCount = \App\Models\User::where('role', 'alumni')->count();
-        $studentCount = \App\Models\User::where('role', 'student')->count();
-        $totalUsers = $alumniNetworkCount + $studentCount;
-        $activeDiscussions = Post::count();
+        // Stats for sidebar (Cached for 10 mins)
+        $stats = \Cache::remember('dashboard_stats', 600, function() {
+            $alumniNetworkCount = \App\Models\User::where('role', 'alumni')->count();
+            $studentCount = \App\Models\User::where('role', 'student')->count();
+            $activeDiscussions = \App\Models\Post::count();
+            return [
+                'totalUsers' => $alumniNetworkCount + $studentCount,
+                'activeDiscussions' => $activeDiscussions
+            ];
+        });
 
-        // Suggested Connections (simple: random alumni excluding self)
+        $totalUsers = $stats['totalUsers'];
+        $activeDiscussions = $stats['activeDiscussions'];
+
+        // Suggested Connections (simple: random alumni excluding self - limited selection to avoid heavy scan)
         $suggestedConnections = \App\Models\User::where('id', '!=', auth()->id())
             ->where('role', 'alumni')
             ->with('profile')
+            ->whereIn('id', function($q) {
+                $q->select('id')->from('users')->where('role', 'alumni')->limit(50);
+            })
             ->inRandomOrder()
             ->limit(3)
             ->get();
@@ -51,6 +63,11 @@ class DashboardController extends Controller
             ->limit(5)
             ->pluck('category');
 
-        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections', 'department', 'trendingTopics'));
+        // Get featured upcoming event
+        $featuredEvent = Event::where('event_date', '>=', now())
+            ->orderBy('event_date', 'asc')
+            ->first();
+
+        return view('dashboard', compact('posts', 'totalUsers', 'activeDiscussions', 'suggestedConnections', 'department', 'trendingTopics', 'featuredEvent'));
     }
 }

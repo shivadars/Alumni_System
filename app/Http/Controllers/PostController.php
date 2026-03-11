@@ -57,9 +57,24 @@ class PostController extends Controller
             'video' => $videoPath,
         ]);
 
-        // Notify other users in the network
-        $otherUsers = \App\Models\User::where('id', '!=', Auth::id())->get();
-        \Illuminate\Support\Facades\Notification::send($otherUsers, new \App\Notifications\NewPostNotification(Auth::user()->name, $post->title));
+        // Determine who gets the notification
+        // Admins send to everyone. Others send only to same department users and admins.
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            $otherUsers = \App\Models\User::where('id', '!=', $user->id)->get();
+        } else {
+            $department = $user->profile ? $user->profile->department : null;
+            $otherUsers = \App\Models\User::where('id', '!=', $user->id)
+                ->where(function($q) use ($department) {
+                    $q->where('role', 'admin')
+                      ->orWhereHas('profile', function($subQuery) use ($department) {
+                          $cleanDept = trim(strtolower(explode('(', $department)[0])); // handles 'BBA (or Business Administration)' -> 'bba'
+                          $subQuery->whereRaw('LOWER(department) LIKE ?', ["%{$cleanDept}%"]);
+                      });
+                })->get();
+        }
+
+        \Illuminate\Support\Facades\Notification::send($otherUsers, new \App\Notifications\NewPostNotification($user->name, $post->title));
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }

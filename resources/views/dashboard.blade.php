@@ -47,7 +47,7 @@
                                 <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 <span class="text-sm font-semibold">Alumni Directory</span>
                             </a>
-                            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
+                            <a href="{{ route('events.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors group">
                                 <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                 <span class="text-sm font-semibold">Events</span>
                             </a>
@@ -113,6 +113,10 @@
                                 <p class="text-slate-500 mt-2">Be the first to share something with the community!</p>
                             </div>
                         @endforelse
+
+                        <div class="mt-8">
+                            {{ $posts->links() }}
+                        </div>
                     </div>
                 </div>
 
@@ -173,14 +177,28 @@
 
                     <!-- Upcoming Events -->
                     <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="relative">
-                            <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">Featured Event</span>
-                            <h4 class="text-slate-900 text-lg font-black leading-tight mb-2">Annual Alumni Meetup 2026</h4>
-                            <p class="text-slate-500 text-[11px] mb-2 font-semibold flex items-center gap-2">
-                                <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                Dec 15, 2026 • Grand Hall
-                            </p>
-                        </div>
+                        @if($featuredEvent)
+                            <div class="relative">
+                                <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">Featured Event</span>
+                                <h4 class="text-slate-900 text-lg font-black leading-tight mb-2">{{ $featuredEvent->title }}</h4>
+                                <p class="text-slate-500 text-[11px] mb-2 font-semibold flex items-center gap-2">
+                                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    {{ $featuredEvent->event_date->format('M d, Y') }} • {{ $featuredEvent->location }}
+                                </p>
+                                <a href="{{ route('events.show', $featuredEvent) }}" class="text-xs text-blue-600 font-bold hover:underline">See Details →</a>
+                            </div>
+                        @else
+                            <div class="relative">
+                                <span class="inline-block px-3 py-1 bg-slate-50 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">No Upcoming Events</span>
+                                <h4 class="text-slate-900 text-lg font-black leading-tight mb-2">Check back later!</h4>
+                                <p class="text-slate-500 text-[11px] mb-4 font-semibold">
+                                    New events will be posted soon.
+                                </p>
+                                @if(in_array(auth()->user()->role, ['admin', 'alumni', 'department']))
+                                    <a href="{{ route('events.create') }}" class="text-xs text-blue-600 font-bold hover:underline">Post an Event →</a>
+                                @endif
+                            </div>
+                        @endif
                     </div>
                 </div>
 

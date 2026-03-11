@@ -54,6 +54,7 @@ Route::middleware(['auth', 'profile.complete'])->group(function () {
     Route::get('/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
     Route::post('/posts/{post}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('posts.comments.store');
+    Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/posts/{post}/like', [App\Http\Controllers\LikeController::class, 'toggle'])->name('posts.like.toggle');
     Route::delete('/posts/{post}', [App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
 });
@@ -71,13 +72,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{user}', [App\Http\Controllers\AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 });
 
-// Department Role Routes
-Route::middleware(['auth', 'role:department', 'profile.complete'])->prefix('department')->name('department.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    Route::get('/list', [App\Http\Controllers\DepartmentController::class, 'index'])->name('index');
-    Route::get('/{department}', [App\Http\Controllers\DepartmentController::class, 'show'])->name('show');
+// Department Routes (Accessible to all users with complete profile)
+Route::middleware(['auth', 'profile.complete'])->group(function () {
+    Route::get('/department/list', [App\Http\Controllers\DepartmentController::class, 'index'])->name('department.index');
+    Route::get('/department/{department}', [App\Http\Controllers\DepartmentController::class, 'show'])->name('department.show');
+});
+
+// Event Routes
+Route::middleware(['auth', 'profile.complete'])->group(function () {
+    Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->name('events.index');
+    Route::get('/events/create', [App\Http\Controllers\EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('events.show');
+    Route::delete('/events/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy');
 });
 
 // Private Messaging Routes
