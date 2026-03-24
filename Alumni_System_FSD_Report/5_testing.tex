@@ -18,7 +18,7 @@ Unit testing involves verifying the smallest testable parts of the application, 
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
+    \small
     \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
         \hline
         \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
@@ -30,7 +30,6 @@ Unit testing involves verifying the smallest testable parts of the application, 
         UT03 & Validation Engine & Submit an empty registration form. & Form returns strict validation errors & Pass \\
         \hline
     \end{tabular}
-    }
     \caption{Unit Test Cases for Alumni System}
     \label{tab:unit_tests}
 \end{table}
@@ -40,7 +39,7 @@ Integration testing validates how individual modules work together when combined
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
+    \small
     \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
         \hline
         \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
@@ -52,7 +51,6 @@ Integration testing validates how individual modules work together when combined
         IT03 & Like System & Click the like button on an existing post. & Like count increments in DB and UI & Pass \\
         \hline
     \end{tabular}
-    }
     \caption{Integration Test Cases for Alumni System}
     \label{tab:integration_tests}
 \end{table}
@@ -62,7 +60,7 @@ System tests simulate real user interactions via HTTP requests to ensure entire 
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
+    \small
     \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
         \hline
         \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
@@ -74,7 +72,6 @@ System tests simulate real user interactions via HTTP requests to ensure entire 
         ST03 & Messaging & User A sends a private message to User B. & Message appears in both users' inboxes & Pass \\
         \hline
     \end{tabular}
-    }
     \caption{System Test Cases for Alumni System}
     \label{tab:system_tests}
 \end{table}
@@ -84,7 +81,7 @@ Performance tests validate the responsiveness of the user interface and database
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
+    \small
     \begin{tabular}{|l|l|p{6cm}|p{5cm}|l|}
         \hline
         \textbf{Test Case ID} & \textbf{Component} & \textbf{Test Description} & \textbf{Expected Result} & \textbf{Status} \\
@@ -94,7 +91,6 @@ Performance tests validate the responsiveness of the user interface and database
         PT02 & Directory Search & Perform a complex alumni search with multiple filters. & Results return and paginate within 500ms & Pass \\
         \hline
     \end{tabular}
-    }
     \caption{Performance Test Cases for Alumni System}
     \label{tab:performance_tests}
 \end{table}

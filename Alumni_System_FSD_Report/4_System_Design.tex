@@ -55,7 +55,7 @@ The Alumni Management System provides a clean and responsive user interface desi
 \end{figure}
 
 \section{System Architecture Diagram}
-The System Architecture diagram maps the communication pathways between the frontend client, the backend Laravel framework, the storage mechanisms, and the MySQL database layer.
+The System Architecture diagram maps the communication pathways between the frontend client, the backend Laravel framework, the storage mechanisms, and the PostgreSQL database layer.
 
 \begin{figure}[H]
     \centering
@@ -75,7 +75,7 @@ The Class Diagram models the core structural components of the Alumni Management
 \end{figure}
 
 \section{Entity-Relationship (ER) Diagram}
-The ER Diagram illustrates the logical data architecture stored within the MySQL database. It highlights how user authenticated identities correspond relationally to their profiles, posts, and chat histories.
+The ER Diagram illustrates the logical data architecture stored within the PostgreSQL database. It highlights how user authenticated identities correspond relationally to their profiles, posts, and chat histories.
 
 \begin{figure}[H]
     \centering
@@ -105,15 +105,15 @@ The Project Pipeline outlines the systematic development workflow followed durin
 \end{figure}
 
 \section{Database Design}
-Data storage is engineered relationally via MySQL. The database schema consists of several core tables.
+Data storage is engineered relationally via PostgreSQL. The database schema consists of several core tables.
 
 \subsection{Users Table}
 The \texttt{users} table stores the central authentication details and role pointers for the system.
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|}
+    \small
+    \begin{tabular}{|l|l|p{8cm}|}
         \hline
         \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
         \hline
@@ -132,7 +132,6 @@ The \texttt{users} table stores the central authentication details and role poin
         updated\_at & Timestamp & Record last modification date \\
         \hline
     \end{tabular}
-    }
     \vspace{0.2cm}
     \caption{Users Table Schema}
     \label{tab:users_schema}
@@ -143,8 +142,8 @@ The \texttt{profiles} table stores detailed biographical and professional data l
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|}
+    \small
+    \begin{tabular}{|l|l|p{8cm}|}
         \hline
         \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
         \hline
@@ -163,7 +162,6 @@ The \texttt{profiles} table stores detailed biographical and professional data l
         profile\_picture & String & Path to the uploaded profile avatar \\
         \hline
     \end{tabular}
-    }
     \vspace{0.2cm}
     \caption{Profiles Table Schema}
     \label{tab:profiles_schema}
@@ -174,8 +172,8 @@ Stores user-generated content for the global feed.
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|}
+    \small
+    \begin{tabular}{|l|l|p{8cm}|}
         \hline
         \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
         \hline
@@ -190,7 +188,6 @@ Stores user-generated content for the global feed.
         created\_at & Timestamp & Post creation timestamp \\
         \hline
     \end{tabular}
-    }
     \vspace{0.2cm}
     \caption{Posts Table Schema}
     \label{tab:posts_schema}
@@ -201,8 +198,8 @@ Stores direct peer-to-peer chat logs securely.
 
 \begin{table}[H]
     \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|}
+    \small
+    \begin{tabular}{|l|l|p{8cm}|}
         \hline
         \textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\
         \hline
@@ -219,7 +216,6 @@ Stores direct peer-to-peer chat logs securely.
         created\_at & Timestamp & Message delivery timestamp \\
         \hline
     \end{tabular}
-    }
     \vspace{0.2cm}
     \caption{Messages Table Schema}
     \label{tab:messages_schema}

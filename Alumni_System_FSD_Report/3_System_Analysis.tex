@@ -65,7 +65,7 @@ The following diagram visually represents the interactions between the primary a
 \subsection{Laravel Framework (PHP 8.2)}
 The Alumni Management System is built natively on the Laravel 12.x PHP framework, utilizing an MVC architecture to guarantee clean, scalable, and secure application code.
 \begin{itemize}
-    \item \textbf{Backend Architecture (MVC):} The Model layer handles relational MySQL queries preventing SQL injection. The Controller isolates business logic (e.g., verifying user profile states), and the Blade View layer handles dynamic DOM rendering.
+    \item \textbf{Backend Architecture (MVC):} The Model layer handles relational PostgreSQL queries preventing SQL injection. The Controller isolates business logic (e.g., verifying user profile states), and the Blade View layer handles dynamic DOM rendering.
     \item \textbf{Frontend Utility Styling:} Tailwind CSS serves as a robust utility engine preventing cross-component cascading errors and vastly reducing custom CSS payload sizes.
 \end{itemize}
 
@@ -90,10 +90,10 @@ The Activity Diagram illustrates the workflow an actor follows when navigating t
 \section{Feasibility Analysis}
  
 \subsection{Technical Feasibility}
-The system is built on a modern, robust technology stack. The backend utilizes the Laravel PHP framework, known for its elegant syntax, built-in security features, and powerful Eloquent ORM. The frontend leverages Laravel Blade templating engine coupled with Tailwind CSS, ensuring a responsive and modern user interface. Vite is used as the frontend build tool for rapid development. The data is managed using a MySQL database, providing a reliable and scalable storage solution for relational data. Given the well-documented nature of these technologies, the project is highly technically feasible.
+The system is built on a modern, robust technology stack. The backend utilizes the Laravel PHP framework, known for its elegant syntax, built-in security features, and powerful Eloquent ORM. The frontend leverages Laravel Blade templating engine coupled with Tailwind CSS, ensuring a responsive and modern user interface. Vite is used as the frontend build tool for rapid development. The data is managed using a PostgreSQL database, providing a reliable and scalable storage solution for relational data. Given the well-documented nature of these technologies, the project is highly technically feasible.
 
 \subsection{Economical Feasibility}
-The development and deployment of the Alumni Management System are highly cost-effective. The chosen technologies (PHP, Laravel, MySQL, Tailwind) are open-source and free to use. Hosting can be achieved on affordable cloud platforms or dedicated VPS servers without incurring massive costs. Maintenance and future scaling are straightforward due to Laravel's popularity and community support.
+The development and deployment of the Alumni Management System are highly cost-effective. The chosen technologies (PHP, Laravel, PostgreSQL, Tailwind) are open-source and free to use. Hosting can be achieved on affordable cloud platforms or dedicated VPS servers without incurring massive costs. Maintenance and future scaling are straightforward due to Laravel's popularity and community support.
 
 \subsection{Operational Feasibility}
 The system is designed with a user-centric approach. The clean, intuitive interface makes it simple for non-technical users to navigate. Automated workflows, such as profile completion checks and notification alerts, guide the user seamlessly through the platform. For administrators, the dedicated dashboards significantly reduce the manual effort required to manage an alumni network.
@@ -103,7 +103,7 @@ The system is designed with a user-centric approach. The clean, intuitive interf
 \subsection{Software Environment}
 \textbf{Frontend:} HTML, Tailwind CSS, JavaScript, Alpine.js, Blade Templates \\
 \textbf{Backend Framework:} Laravel (PHP) \\
-\textbf{Database:} MySQL \\
+\textbf{Database:} PostgreSQL \\
 \textbf{Build Tools:} Vite, Node.js, npm \\
 \textbf{Version Control:} Git \\
 \textbf{Environment:} Windows / Linux Server (Production)
