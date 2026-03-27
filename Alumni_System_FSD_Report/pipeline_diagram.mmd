@@ -1,7 +1,22 @@
-flowchart LR
-    Req[Requirements Analysis] --> Design[System Design]
-    Design --> DB[Database Schema & Migration]
-    DB --> Back[Backend Models & Controllers]
-    Back --> Front[Frontend Blade & Tailwind]
-    Front --> Test[Testing & Validation]
-    Test --> Deploy[VPS Deployment]
+flowchart TD
+    Idea[Core Idea & Requirements]
+    S1[System Architecture & Environment Setup]
+    S2[Database Schema & Migration]
+    S3[Backend Models & Controllers]
+    S4[Frontend Blade UI & Integration]
+    S5[Authentication & Role Management]
+    S6[System Validation & Debugging]
+    S7[Test and Release]
+    
+    %% Connections flowing strictly from top to down
+    Idea --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    
+    %% Styling
+    classDef box fill:#ffffff,stroke:#666,stroke-width:1.5px,color:#000,rx:4,ry:4,padding:15px
+    class Idea,S1,S2,S3,S4,S5,S6,S7 box
