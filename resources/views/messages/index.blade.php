@@ -11,14 +11,14 @@
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </span>
-                            <input type="text" placeholder="Search messages..." class="block w-full pl-10 pr-4 py-2 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all placeholder:text-slate-400">
+                            <input type="text" id="search-messages" placeholder="Search messages..." autocomplete="off" class="block w-full pl-10 pr-4 py-2 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all placeholder:text-slate-400">
                         </div>
                     </div>
 
                     <!-- Conversations List -->
                     <div class="flex-grow overflow-y-auto">
                         @forelse($conversations as $conversation)
-                            <a href="{{ route('messages.show', $conversation->id) }}" class="flex items-center gap-4 p-5 hover:bg-white hover:shadow-sm transition-all border-b border-slate-50 group">
+                            <a href="{{ route('messages.show', $conversation->id) }}" data-name="{{ strtolower($conversation->name) }}" class="conversation-item flex items-center gap-4 p-5 hover:bg-white hover:shadow-sm transition-all border-b border-slate-50 group">
                                 <div class="relative flex-shrink-0">
                                     @if($conversation->profile && $conversation->profile->profile_picture)
                                         <img src="{{ asset('storage/' . $conversation->profile->profile_picture) }}" alt="{{ $conversation->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-white">
@@ -59,6 +59,11 @@
                                 <p class="text-sm">No conversations yet.</p>
                             </div>
                         @endforelse
+
+                        {{-- No search results placeholder --}}
+                        <div id="no-search-results" class="hidden p-8 text-center text-slate-400">
+                            <p class="text-sm">No conversations match your search.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -78,3 +83,28 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-messages');
+        const items = document.querySelectorAll('.conversation-item');
+        const noResults = document.getElementById('no-search-results');
+
+        searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            items.forEach(function (item) {
+                const name = item.getAttribute('data-name') || '';
+                if (name.includes(query)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            noResults.classList.toggle('hidden', visibleCount > 0 || query === '');
+        });
+    });
+</script>

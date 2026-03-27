@@ -31,6 +31,14 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
+        // Automatically prepend https:// if missing for better UX
+        if ($request->has('linkedin_url') && $request->linkedin_url) {
+            $url = $request->linkedin_url;
+            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                $request->merge(['linkedin_url' => "https://" . $url]);
+            }
+        }
+
         $request->validate([
             'department' => 'required|string|max:255',
             'bio' => 'nullable|string',

@@ -38,22 +38,35 @@
                                     <svg class="w-5 h-5 text-slate-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                     <p>{{ $event->location }}</p>
                                 </div>
-                                <div class="flex items-start gap-2">
-                                    <svg class="w-5 h-5 text-slate-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826L10.242 9.242m-4.242 4.242l-.242 1.242m1.242-1.242l1.242-.242m3.158-3.158l-.606-.606m-2.424 2.424l-.606-.606"></path></svg>
-                                    <a href="#" class="text-blue-600 font-bold hover:underline">Event link</a>
-                                </div>
+
                                 <div class="flex items-center gap-2">
                                     <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                                    <p class="font-bold text-slate-500">10 attendees</p>
+                                    <p class="font-bold text-slate-500">{{ $attendeeCount }} {{ Str::plural('attendee', $attendeeCount) }}</p>
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap items-center gap-2 mb-6">
-                                <button class="px-6 py-1.5 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors">Attend</button>
-                                <button class="px-6 py-1.5 border border-blue-600 text-blue-600 font-bold rounded-full hover:bg-blue-50 transition-colors">Share</button>
-                                <button class="p-1.5 text-slate-500 hover:bg-slate-100 rounded-full">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16a2 2 0 110-4 2 2 0 010 4zm7 0a2 2 0 110-4 2 2 0 010 4zM5 16a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                                </button>
+                            {{-- Success flash message --}}
+                            @if(session('success'))
+                                <div class="mb-4 px-4 py-2 bg-green-50 border border-green-200 text-green-700 text-sm font-semibold rounded-lg">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <div class="flex flex-wrap items-center gap-3 mb-6">
+                                {{-- Attend Toggle Form --}}
+                                <form method="POST" action="{{ route('events.attend', $event) }}">
+                                    @csrf
+                                    @if($isAttending)
+                                        <button type="submit" class="px-6 py-1.5 bg-red-500 text-white font-bold rounded-full hover:bg-red-600 transition-colors">
+                                            ✗ Cancel Attendance
+                                        </button>
+                                    @else
+                                        <button type="submit" class="px-6 py-1.5 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors">
+                                            Attend
+                                        </button>
+                                    @endif
+                                </form>
+                                <span class="text-sm text-slate-500 font-semibold">{{ $attendeeCount }} {{ Str::plural('attendee', $attendeeCount) }}</span>
                             </div>
 
                             <!-- Tabs -->
@@ -67,47 +80,25 @@
                     <!-- Description Card -->
                     <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
                         <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 bg-slate-100 rounded border border-slate-200 overflow-hidden">
-                                        @if($event->user->profile && $event->user->profile->profile_picture)
-                                            <img src="{{ asset('storage/' . $event->user->profile->profile_picture) }}" class="w-full h-full object-cover">
-                                        @else
-                                            <div class="w-full h-full flex items-center justify-center text-slate-400 font-bold">AL</div>
-                                        @endif
-                                    </div>
-                                    <div>
-                                        <h3 class="font-semibold text-slate-900">{{ $event->user->name }}</h3>
-                                        <p class="text-xs text-slate-500">150 followers</p>
-                                    </div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 bg-slate-100 rounded border border-slate-200 overflow-hidden">
+                                    @if($event->user->profile && $event->user->profile->profile_picture)
+                                        <img src="{{ asset('storage/' . $event->user->profile->profile_picture) }}" class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center text-slate-400 font-bold">AL</div>
+                                    @endif
                                 </div>
-                                <button class="text-blue-600 font-bold text-sm px-4 py-1 hover:bg-blue-50 rounded-full transition-colors">+ Follow</button>
+                                <div>
+                                    <h3 class="font-semibold text-slate-900">{{ $event->user->name }}</h3>
+                                    <p class="text-xs text-slate-500">Organizer</p>
+                                </div>
                             </div>
 
                             <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed">
                                 {!! nl2br(e($event->description)) !!}
                             </div>
                             
-                            <div class="mt-6 pt-4 border-t border-slate-100">
-                                <div class="flex items-center gap-2 mb-4">
-                                    <div class="flex -space-x-2">
-                                        <div class="w-6 h-6 rounded-full border-2 border-white bg-blue-500"></div>
-                                        <div class="w-6 h-6 rounded-full border-2 border-white bg-rose-500"></div>
-                                        <div class="w-6 h-6 rounded-full border-2 border-white bg-emerald-500"></div>
-                                    </div>
-                                    <span class="text-xs text-slate-500">8</span>
-                                </div>
-                                <div class="flex gap-4">
-                                    <button class="flex items-center gap-1 text-slate-500 font-bold text-xs hover:bg-slate-50 px-2 py-1 rounded">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.757c1.246 0 2.257 1.01 2.257 2.257l-.007.247c-.007.728-.316 1.428-.857 1.968l-1.037 1.037c-.542.541-1.24.843-1.968.85l-7.795.008c-.728.007-1.428-.302-1.968-.843L6.343 14.343a2.757 2.757 0 010-3.899l.247-.247c.541-.541 1.24-.85 1.968-.857L14 10z"></path></svg>
-                                        Like
-                                    </button>
-                                    <button class="flex items-center gap-1 text-slate-500 font-bold text-xs hover:bg-slate-50 px-2 py-1 rounded">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                                        Comment
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

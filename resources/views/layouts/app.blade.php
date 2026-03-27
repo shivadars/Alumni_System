@@ -17,6 +17,7 @@
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('images/tab.png') }}">
         <style>
+            html { font-size: 87.5%; }
             body { background-color: #F3F2EF !important; margin: 0; padding: 0; }
         </style>
     </head>

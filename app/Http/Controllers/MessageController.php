@@ -82,9 +82,6 @@ class MessageController extends Controller
             });
     }
 
-    /**
-     * Store a newly created message.
-     */
     public function store(Request $request, User $user)
     {
         $request->validate([
@@ -98,6 +95,14 @@ class MessageController extends Controller
         ]);
 
         $user->notify(new \App\Notifications\NewMessageNotification(Auth::user()->name, $message->content, Auth::id()));
+
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'html' => view('messages.partials.message', compact('message'))->render()
+            ]);
+        }
 
         return back()->with('status', 'Message sent!');
     }

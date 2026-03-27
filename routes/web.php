@@ -85,6 +85,7 @@ Route::middleware(['auth', 'profile.complete'])->group(function () {
     Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->name('events.store');
     Route::get('/events/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('events.show');
     Route::delete('/events/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy');
+    Route::post('/events/{event}/attend', [App\Http\Controllers\EventController::class, 'attend'])->name('events.attend');
 });
 
 // Private Messaging Routes

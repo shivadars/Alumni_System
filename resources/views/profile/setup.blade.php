@@ -79,7 +79,7 @@
                             <!-- LinkedIn -->
                             <div>
                                 <x-input-label for="linkedin_url" :value="__('LinkedIn Profile URL')" />
-                                <x-text-input id="linkedin_url" class="block mt-1 w-full" type="url" name="linkedin_url" :value="old('linkedin_url', $profile->linkedin_url ?? '')" placeholder="https://linkedin.com/in/username" />
+                                <x-text-input id="linkedin_url" class="block mt-1 w-full" type="text" name="linkedin_url" :value="old('linkedin_url', $profile->linkedin_url ?? '')" placeholder="https://linkedin.com/in/username" />
                                 <x-input-error :messages="$errors->get('linkedin_url')" class="mt-2" />
                             </div>
 

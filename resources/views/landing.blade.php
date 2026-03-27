@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" href="{{ asset('images/tab.png') }}">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F3F2EF !important; color: #111827; }
+        body { font-family: 'Inter', sans-serif; font-size: 87.5%; background-color: #F3F2EF !important; color: #111827; }
         
         .navbar {
             padding: 10px 60px;

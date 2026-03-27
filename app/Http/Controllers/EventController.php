@@ -21,13 +21,32 @@ class EventController extends Controller
             ->orderBy('event_date', 'asc')
             ->limit(3)
             ->get();
-            
-        return view('events.show', compact('event', 'otherEvents'));
+
+        $isAttending = $event->attendees()->where('user_id', auth()->id())->exists();
+        $attendeeCount = $event->attendees()->count();
+
+        return view('events.show', compact('event', 'otherEvents', 'isAttending', 'attendeeCount'));
+    }
+
+    public function attend(Event $event)
+    {
+        $user = auth()->user();
+
+        if ($event->attendees()->where('user_id', $user->id)->exists()) {
+            // Already attending — toggle off
+            $event->attendees()->detach($user->id);
+            $message = 'You are no longer attending this event.';
+        } else {
+            // Not attending — toggle on
+            $event->attendees()->attach($user->id);
+            $message = 'You are now attending this event!';
+        }
+
+        return back()->with('success', $message);
     }
 
     public function create()
     {
-        // Only Admin, Alumni, or Department can create events
         if (!in_array(auth()->user()->role, ['admin', 'alumni', 'department'])) {
             abort(403);
         }

@@ -11,14 +11,14 @@
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </span>
-                            <input type="text" placeholder="Search messages..." class="block w-full pl-10 pr-4 py-2 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all placeholder:text-slate-400">
+                            <input type="text" id="search-messages" placeholder="Search messages..." autocomplete="off" class="block w-full pl-10 pr-4 py-2 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all placeholder:text-slate-400">
                         </div>
                     </div>
 
                     <!-- Conversations List -->
                     <div class="flex-grow overflow-y-auto">
                         @foreach($conversations as $conversation)
-                            <a href="{{ route('messages.show', $conversation->id) }}" class="flex items-center gap-4 p-5 hover:bg-white hover:shadow-sm transition-all border-b border-slate-50 group {{ $user->id == $conversation->id ? 'bg-white shadow-sm ring-1 ring-slate-100' : '' }}">
+                            <a href="{{ route('messages.show', $conversation->id) }}" data-name="{{ strtolower($conversation->name) }}" class="conversation-item flex items-center gap-4 p-5 hover:bg-white hover:shadow-sm transition-all border-b border-slate-50 group {{ $user->id == $conversation->id ? 'bg-white shadow-sm ring-1 ring-slate-100' : '' }}">
                                 <div class="relative flex-shrink-0">
                                     @if($conversation->profile && $conversation->profile->profile_picture)
                                         <img src="{{ asset('storage/' . $conversation->profile->profile_picture) }}" alt="{{ $conversation->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-white">
@@ -87,16 +87,7 @@
                     <!-- Chat Messages Area -->
                     <div class="flex-grow p-8 overflow-y-auto space-y-6 bg-slate-50/20" id="chat-messages">
                         @forelse($messages as $message)
-                            <div class="flex {{ $message->sender_id == Auth::id() ? 'justify-end' : 'justify-start' }}">
-                                <div class="max-w-[75%]">
-                                    <div class="px-5 py-3 rounded-3xl shadow-sm text-sm {{ $message->sender_id == Auth::id() ? 'bg-slate-900 text-white rounded-br-none' : 'bg-white text-slate-700 border border-slate-100 rounded-bl-none' }}">
-                                        {{ $message->content }}
-                                    </div>
-                                    <span class="text-[10px] font-bold text-slate-400 mt-2 block {{ $message->sender_id == Auth::id() ? 'text-right' : 'text-left' }}">
-                                        {{ $message->created_at->format('H:i') }}
-                                    </span>
-                                </div>
-                            </div>
+                            @include('messages.partials.message')
                         @empty
                             <div class="flex flex-col items-center justify-center h-full text-center py-12">
                                 <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4 border border-slate-100 shadow-inner">
@@ -110,10 +101,10 @@
 
                     <!-- Message Input Area -->
                     <div class="p-6 bg-white border-t border-slate-100">
-                        <form method="POST" action="{{ route('messages.store', $user->id) }}" class="flex items-center gap-4">
+                        <form id="message-form" method="POST" action="{{ route('messages.store', $user->id) }}" class="flex items-center gap-4">
                             @csrf
                             <div class="relative flex-grow">
-                                <input name="content" type="text" placeholder="Type your message..." class="block w-full py-3 px-5 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all placeholder:text-slate-400 shadow-inner" required autocomplete="off">
+                                <input id="message-content" name="content" type="text" placeholder="Type your message..." class="block w-full py-3 px-5 bg-slate-100/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all placeholder:text-slate-400 shadow-inner" required autocomplete="off">
                             </div>
                             <button type="submit" class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center hover:bg-black transition-all shadow-lg shadow-slate-200">
                                 <svg class="w-5 h-5 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
@@ -128,9 +119,66 @@
     </div>
 
     <script>
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const chatMessages = document.getElementById('chat-messages');
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
+            const messageForm = document.getElementById('message-form');
+            const messageContent = document.getElementById('message-content');
+            const searchInput = document.getElementById('search-messages');
+            const convItems = document.querySelectorAll('.conversation-item');
+
+            // Scroll to bottom
+            const scrollToBottom = () => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+            scrollToBottom();
+
+            // AJAX Message Sending
+            messageForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const content = messageContent.value.trim();
+                if (!content) return;
+
+                const formData = new FormData(messageForm);
+                messageContent.value = ''; // Quick clear for better UX
+
+                try {
+                    const response = await fetch(messageForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            // Append new message
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = data.html;
+                            chatMessages.appendChild(tempDiv.firstElementChild);
+                            scrollToBottom();
+                        }
+                    } else {
+                        console.error('Failed to send message');
+                        messageContent.value = content; // Restore content on error
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    messageContent.value = content; // Restore content on error
+                }
+            };
+
+            // Sidebar Search
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    convItems.forEach(item => {
+                        const name = item.getAttribute('data-name') || '';
+                        item.style.display = name.includes(query) ? '' : 'none';
+                    });
+                });
+            }
+        });
     </script>
 </x-app-layout>

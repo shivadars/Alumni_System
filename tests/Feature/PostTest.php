@@ -70,7 +70,7 @@ class PostTest extends TestCase
         $response = $this->actingAs($student)->get(route('dashboard'));
 
         $response->assertStatus(200);
-        $response->assertSee('Community Feed');
+        $response->assertSee('Global Community');
         $response->assertSee('Community Update');
         $response->assertSee('Hello everyone!');
     }
