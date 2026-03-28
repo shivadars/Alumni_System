@@ -75,8 +75,8 @@ import './bootstrap';
                     }
 
                 } else {
-                    if (z > 800) {
-                        opacity = Math.max(0, 1 - (z - 800) / 400); // Surrounding layers fade as they pass
+                    if (z > 1050) {
+                        opacity = Math.max(0, 1 - (z - 1050) / 700); // Drastically slower fade (passes camera before vanishing)
                     }
                 }
 
@@ -86,8 +86,8 @@ import './bootstrap';
                 // Cache the div element dynamically if not present to stop querySelector DOM traverses on 60fps
                 if (!wrapper._childDiv) wrapper._childDiv = wrapper.querySelector('div');
                 
-                // Blur effect as layers get close to the camera (skipping central layer)
-                const blur = (index % layerConfigs.length !== 0 && z > 500) ? (z - 500) / 30 : 0;
+                // Ultra-soft blur progression
+                const blur = (index % layerConfigs.length !== 0 && z > 750) ? (z - 750) / 60 : 0;
                 if (wrapper._childDiv) {
                     wrapper._childDiv.style.filter = `blur(${blur}px)`;
                 }
