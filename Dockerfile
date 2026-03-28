@@ -46,11 +46,13 @@ RUN a2enmod rewrite
 
 # Execution Script
 RUN printf "#!/bin/sh\n\
-php artisan migrate --force\n\
-php artisan db:seed --class=AdminUserSeeder\n\
-php artisan config:cache\n\
-php artisan route:cache\n\
-php artisan view:cache\n\
+echo 'Waiting for database...' \n\
+sleep 15 \n\
+php artisan migrate --force \n\
+php artisan db:seed --class=AdminUserSeeder \n\
+php artisan config:cache \n\
+php artisan route:cache \n\
+php artisan view:cache \n\
 exec apache2-foreground" > /usr/local/bin/start-app.sh && \
     chmod +x /usr/local/bin/start-app.sh
 
