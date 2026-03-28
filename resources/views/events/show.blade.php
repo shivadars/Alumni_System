@@ -69,11 +69,7 @@
                                 <span class="text-sm text-slate-500 font-semibold">{{ $attendeeCount }} {{ Str::plural('attendee', $attendeeCount) }}</span>
                             </div>
 
-                            <!-- Tabs -->
-                            <div class="flex border-t border-slate-100">
-                                <button class="px-4 py-3 border-b-2 border-blue-600 text-blue-600 font-bold text-sm">Details</button>
-                                <button class="px-4 py-3 text-slate-500 font-bold text-sm hover:bg-slate-50">Comments</button>
-                            </div>
+                            <!-- Event details directly below -->
                         </div>
                     </div>
 
