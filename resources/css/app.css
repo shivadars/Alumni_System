@@ -105,12 +105,13 @@
     position: relative;
     height: 400vh;
     background: var(--bg-primary);
+    padding-top: 80px;
 }
 
 .parallax-sticky {
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 80px;
+    height: calc(100vh - 80px);
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -143,37 +144,42 @@
 
 /* Precise 3D Layout Projection (Cancels out Z-depth initial scale artifacts) */
 .hero-layer-1 { z-index: 10; } /* Center Focus */
-.hero-layer-1 div { width: 20.5vw; height: 11.5vw; transform: translate(0, 0); border-color: var(--accent); }
+.hero-layer-1 div { width: 15.4vw; height: 8.6vw; transform: translate(0, 0); border-color: var(--accent); }
 /* Let the native ultra HD image shine without dulling the whole frame */
 .hero-layer-1 img { filter: brightness(1) !important; }
 
 /* Apply a subtle, localized dark radial gradient just behind the text to ensure perfect contrast while keeping the edges bright */
-.hero-layer-1 div::after {
-    content: '';
+.radial-shadow {
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 65%);
     z-index: 5;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.hero-zoomed .radial-shadow {
+    opacity: 1 !important;
 }
 
 .hero-layer-2 { z-index: 2; }
-.hero-layer-2 div { width: 17vw; height: 25.6vw; transform: translate(-21.3vw, -4.8vw); }
+.hero-layer-2 div { width: 12.8vw; height: 19.2vw; transform: translate(-16vw, -3.6vw); }
 
 .hero-layer-3 { z-index: 3; }
-.hero-layer-3 div { width: 24.9vw; height: 13.6vw; transform: translate(0vw, -17vw); }
+.hero-layer-3 div { width: 18.7vw; height: 10.2vw; transform: translate(0vw, -12.8vw); }
 
 .hero-layer-4 { z-index: 4; }
-.hero-layer-4 div { width: 21.6vw; height: 18vw; transform: translate(25.8vw, 0vw); }
+.hero-layer-4 div { width: 16.2vw; height: 13.5vw; transform: translate(19.4vw, 0vw); }
 
 .hero-layer-5 { z-index: 5; }
-.hero-layer-5 div { width: 20.3vw; height: 15.2vw; transform: translate(-25.3vw, 19vw); }
+.hero-layer-5 div { width: 15.2vw; height: 11.4vw; transform: translate(-19vw, 14.2vw); }
 
 .hero-layer-6 { z-index: 6; }
-.hero-layer-6 div { width: 22vw; height: 13.2vw; transform: translate(0vw, 16.5vw); }
+.hero-layer-6 div { width: 16.5vw; height: 9.9vw; transform: translate(0vw, 12.4vw); }
 
 .hero-layer-7 { z-index: 7; }
-.hero-layer-7 div { width: 21.3vw; height: 16vw; transform: translate(27.3vw, 20vw); }
+.hero-layer-7 div { width: 16vw; height: 12vw; transform: translate(20.5vw, 15vw); }
 
 .parallax-image-wrapper img {
     width: 100%;
@@ -193,10 +199,16 @@
     z-index: 20;
     pointer-events: none;
     padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.hero-zoomed .integrated-content {
+    opacity: 1 !important;
 }
 
 .integrated-content h1 {
-    font-size: clamp(1.2rem, 1.5vw, 2rem);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
     line-height: 1.1;
     margin-bottom: 0.2rem;
     color: #fff;
@@ -204,7 +216,7 @@
 }
 
 .integrated-content p {
-    font-size: clamp(0.5rem, 0.6vw, 0.7rem);
+    font-size: clamp(0.4rem, 0.45vw, 0.55rem);
     color: rgba(255,255,255,0.9);
     max-width: 90%;
     margin: 0 auto 0.5rem auto;
@@ -214,10 +226,10 @@
 .login-btn-zoomed {
     background: var(--accent);
     color: #ffffff;
-    padding: 0.3rem 0.8rem;
+    padding: 0.25rem 0.6rem;
     border-radius: 100px;
     font-weight: 700;
-    font-size: 0.45rem;
+    font-size: 0.35rem;
     display: inline-block;
     transition: all 0.3s ease;
     text-transform: uppercase;

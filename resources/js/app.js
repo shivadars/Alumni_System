@@ -46,7 +46,7 @@ import './bootstrap';
 
             // Layer configs aligned directly with HTML order (1 to 7)
             const layerConfigs = [
-                { zStart: 100,  zEnd: 1193, scatterX: 0,     scatterY: 0 },      // Layer 1 (Perfect 100vw fill point calibrated for baseline scale)
+                { zStart: 100,  zEnd: 1269, scatterX: 0,     scatterY: 0 },      // Layer 1 (Adjusted zEnd to perfectly fill view over shorter distance)
                 { zStart: -100, zEnd: 1500, scatterX: -1000, scatterY: -1000 },  // Layer 2 (Top Left Gradient)
                 { zStart: -200, zEnd: 1300, scatterX: 500,   scatterY: -1000 },  // Layer 3 (Top Cityscape)
                 { zStart: -300, zEnd: 1400, scatterX: 1000,  scatterY: 200 },    // Layer 4 (Right Mountains)
@@ -65,6 +65,13 @@ import './bootstrap';
                 let opacity = 1;
                 if (index % layerConfigs.length === 0) { // Central Hero (Layer 1)
                     opacity = 1; // Stay fully visible when hitting full screen 
+
+                    // Reveal text and gradient only when closing in on full screen
+                    if (progress > 0.6) {
+                        wrapper.classList.add('hero-zoomed');
+                    } else {
+                        wrapper.classList.remove('hero-zoomed');
+                    }
 
                 } else {
                     if (z > 800) {

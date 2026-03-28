@@ -41,6 +41,7 @@
                 <div class="parallax-image-wrapper hero-layer-1">
                     <div>
                         <img src="{{ asset('images/hero-bg.png') }}" alt="Focus">
+                        <div class="radial-shadow"></div>
                         <div class="integrated-content">
                             <h1 class="text-gradient" style="margin-bottom: 0;">Connect.<br>Engage. Grow.</h1>
                             <p style="margin-bottom: 0.5rem;">Bridging the gap between education and excellence.</p>
