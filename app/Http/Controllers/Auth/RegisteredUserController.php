@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
-            'status' => in_array($request->role, ['student', 'department']) ? 'approved' : 'pending',
+            'status' => 'approved',
             'password' => Hash::make($request->password),
         ]);
 

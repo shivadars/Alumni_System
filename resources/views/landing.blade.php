@@ -17,19 +17,75 @@
 </head>
 <body class="antialiased landing-body">
     
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="logo">
-            <a href="/">
-                <img src="{{ asset('images/logo.png') }}" alt="Connectwork Logo">
+    <!-- Premium Floating Navbar -->
+    <header 
+        x-data="{ scrolled: false, mobileMenuOpen: false }" 
+        @scroll.window="scrolled = (window.pageYOffset > 20)"
+        class="fixed top-0 left-0 right-0 z-[1000] w-full flex justify-center px-4 transition-all duration-500 ease-in-out"
+        :class="scrolled ? 'pt-4' : 'pt-6'"
+    >
+        <div 
+            class="flex items-center justify-between px-6 py-3 w-full max-w-5xl rounded-full border transition-all duration-500"
+            :class="scrolled ? 'bg-white/90 backdrop-blur-xl border-gray-200 shadow-[0_8px_30px_rgb(0,0,0,0.08)]' : 'bg-transparent border-transparent'"
+        >
+            <!-- Logo -->
+            <a href="/" class="flex items-center gap-2 relative z-20 group">
+                <img src="{{ asset('images/logo.png') }}" alt="Connectwork Logo" class="h-8 transition-transform duration-300 group-hover:scale-105">
             </a>
+
+            <!-- Desktop Nav -->
+            <div class="relative hidden md:block">
+                <!-- Nav shown when scrolled -->
+                <nav class="flex items-center gap-1 mx-auto border border-gray-200/50 bg-white/50 backdrop-blur-sm rounded-full p-1 shadow-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-max" 
+                     x-show="scrolled" x-transition.opacity.duration.300ms style="display: none;">
+                    <a href="#features" class="px-5 py-2 rounded-full text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50/80 transition-all">Features</a>
+                    <a href="#testimonials" class="px-5 py-2 rounded-full text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50/80 transition-all">Testimonials</a>
+                    <a href="#footer" class="px-5 py-2 rounded-full text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50/80 transition-all">Network</a>
+                </nav>
+
+                <!-- Nav shown at top -->
+                <nav class="flex items-center gap-8 mx-auto" 
+                     x-show="!scrolled" x-transition.opacity.duration.300ms>
+                    <a href="#features" class="text-sm font-semibold text-gray-900 hover:opacity-70 transition-opacity">Features</a>
+                    <a href="#testimonials" class="text-sm font-semibold text-gray-900 hover:opacity-70 transition-opacity">Testimonials</a>
+                    <a href="#footer" class="text-sm font-semibold text-gray-900 hover:opacity-70 transition-opacity">Network</a>
+                </nav>
+            </div>
+
+            <!-- Actions -->
+            <div class="hidden md:flex items-center gap-4 relative z-20">
+                <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors">Log in</a>
+                <a href="{{ route('register') }}" class="px-5 py-2.5 bg-gray-900 hover:bg-black text-white text-sm font-semibold rounded-full shadow-lg shadow-gray-900/20 hover:shadow-gray-900/40 hover:-translate-y-0.5 transition-all duration-300">Join Network</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden relative z-20 p-2 text-gray-600 hover:text-gray-900 focus:outline-none">
+                <svg x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg x-show="mobileMenuOpen" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
-        
-        <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="{{ route('login') }}" class="login-btn">Sign In</a>
-        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div 
+            x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="-translate-y-full opacity-0"
+            x-transition:enter-end="translate-y-0 opacity-100"
+            x-transition:leave="transition ease-in duration-200 transform"
+            x-transition:leave-start="translate-y-0 opacity-100"
+            x-transition:leave-end="-translate-y-full opacity-0"
+            class="absolute top-0 left-0 w-full bg-white shadow-2xl border-b border-gray-100 z-10 pt-24 pb-8 px-6 flex flex-col gap-6 items-center"
+            style="display: none;"
+        >
+            <a href="#features" @click="mobileMenuOpen = false" class="text-lg font-semibold text-gray-900">Features</a>
+            <a href="#testimonials" @click="mobileMenuOpen = false" class="text-lg font-semibold text-gray-900">Testimonials</a>
+            <a href="#footer" @click="mobileMenuOpen = false" class="text-lg font-semibold text-gray-900">Network</a>
+            
+            <div class="w-full h-px bg-gray-100 my-2"></div>
+            
+            <a href="{{ route('login') }}" class="text-lg font-semibold text-gray-700">Log in</a>
+            <a href="{{ route('register') }}" class="w-full text-center py-3 bg-gray-900 text-white rounded-xl font-bold mt-2">Join Network</a>
+        </div>
     </header>
 
     <main>
@@ -40,12 +96,6 @@
                 <div class="parallax-image-wrapper hero-layer-1">
                     <div>
                         <img src="{{ asset('images/hero-bg.png') }}" alt="Focus">
-                        <div class="radial-shadow"></div>
-                        <div class="integrated-content">
-                            <h1 class="text-gradient" style="margin-bottom: 0;">Connect.<br>Engage. Grow.</h1>
-                            <p style="margin-bottom: 0.5rem;">Bridging the gap between education and excellence.</p>
-                            <a href="{{ route('login') }}" class="login-btn-zoomed" style="pointer-events: auto;">Sign In</a>
-                        </div>
                     </div>
                 </div>
 
@@ -89,32 +139,32 @@
         <!-- Features Section (Flipping Cards) -->
         <section class="py-24 bg-white flex flex-col items-center border-t border-gray-200" id="features">
             <div class="text-center mb-16 px-4">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-black" style="font-family: var(--font-heading)">Why Connectwork?</h2>
-                <p class="text-lg text-gray-700 max-w-2xl mx-auto">Everything you need to grow your career, right at your fingertips.</p>
+                <h2 class="text-3xl md:text-5xl font-semibold mb-4 text-gray-900 tracking-tight">Networking, perfected.</h2>
+                <p class="text-lg text-gray-500 font-medium max-w-2xl mx-auto">Connect with the people who define the industry. From campus mentors to global founders.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 w-full justify-items-center">
                 
                 <x-flipping-card 
-                    title="Expert Mentorship"
-                    shortDescription="Elevate your career through exclusive 1-on-1 guidance from established alumni leaders."
-                    description="Connect with established alumni who have walked your path. Get 1-on-1 guidance, career advice, and industry insights to accelerate your professional growth."
+                    title="Direct Mentorship"
+                    shortDescription="The blueprint for your success, delivered 1-on-1 by established alumni leaders."
+                    description="Skip the trial and error. Get direct insights and career roadmaps from industry pioneers who sat in the same seats you do today."
                     image="{{ asset('images/landing/mentorship_3d.png') }}"
                 >
                 </x-flipping-card>
 
                 <x-flipping-card 
-                    title="Job Opportunities"
-                    shortDescription="Discover hand-picked roles directly from peers who know the true value of your education."
-                    description="Access an exclusive job board curated by your peers. Find roles directly posted by alumni looking to hire fresh talent or experienced professionals from our ecosystem."
+                    title="Inner Circle Access"
+                    shortDescription="Access high-impact opportunities that never hit the public job boards."
+                    description="The best roles are often unlisted. Unlock a private job board curated by alumni founders and executives looking for elite internal talent."
                     image="{{ asset('images/landing/hero_6.png') }}"
                 >
                 </x-flipping-card>
 
                 <x-flipping-card 
-                    title="Global Networking"
-                    shortDescription="Bridge the geographical gap and forge meaningful, long-lasting connections worldwide."
-                    description="Reunite with batchmates and discover alumni worldwide. Stay updated through group discussions and filter directories to find experts in specific industries."
+                    title="Global Reach"
+                    shortDescription="A legacy network without borders. Connect from anywhere, scale to everywhere."
+                    description="Forge elite partnerships spanning 50+ countries. Leverage the collective intelligence of a worldwide network to scale your career globally."
                     image="{{ asset('images/landing/hero_1.png') }}"
                 >
                 </x-flipping-card>

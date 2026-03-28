@@ -39,66 +39,7 @@
     -webkit-text-fill-color: transparent;
 }
 
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 1.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    background: transparent;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-.navbar.scrolled {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    padding: 1rem 4rem;
-    border-bottom: 1px solid var(--border);
-}
-
-.logo img {
-    height: 48px;
-    filter: brightness(0);
-}
-
-.nav-links {
-    display: flex;
-    gap: 2.5rem;
-    align-items: center;
-}
-
-.nav-links a {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-}
-
-.nav-links a:hover {
-    opacity: 1;
-}
-
-/* Login Button */
-.login-btn {
-    background: var(--text-primary);
-    color: var(--bg-primary) !important;
-    padding: 0.75rem 1.5rem;
-    border-radius: 100px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    opacity: 1 !important;
-}
-
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
 
 /* Hero Section - Zoom Parallax */
 .parallax-container {
@@ -125,11 +66,10 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    will-change: transform, opacity;
+    will-change: transform;
     display: flex;
     align-items: center;
     justify-content: center;
-    transform-style: preserve-3d;
 }
 
 .parallax-image-wrapper div {
@@ -142,78 +82,11 @@
     flex-shrink: 0;
 }
 
-/* Precise 3D Layout Projection (Cancels out Z-depth initial scale artifacts) */
-.hero-layer-1 { z-index: 10; } /* Center Focus */
+/* Precise 3D Layout Projection */
+.hero-layer-1 { z-index: 10; will-change: auto !important; } /* Center Focus: Prevent GPU blur freeze */
 .hero-layer-1 div { width: 15.4vw; height: 8.6vw; transform: translate(0, 0); border-color: var(--accent); }
 /* Let the native ultra HD image shine without dulling the whole frame */
 .hero-layer-1 img { filter: brightness(1) !important; transition: filter 1s ease; }
-.hero-zoomed img { filter: brightness(0.7) !important; }
-
-/* Content inside the zooming layer */
-.radial-shadow {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 100%);
-    opacity: 0;
-    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    z-index: 1;
-}
-.hero-zoomed .radial-shadow { opacity: 1; }
-
-.integrated-content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 2;
-    transform: scale(0.95);
-    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.hero-zoomed .integrated-content {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-}
-
-/* Because the container physically scales up 6.5x when closest to camera, 
-   we mathematically size fonts to be small initially so they look perfect at max zoom */
-.integrated-content h1 {
-    font-size: 1.1vw;
-    font-weight: 800;
-    line-height: 1.1;
-    color: #fff;
-    text-shadow: 0 0.5px 1px rgba(0,0,0,0.5);
-}
-.integrated-content p {
-    font-size: 0.35vw;
-    font-weight: 500;
-    color: rgba(255,255,255,0.9);
-    margin-top: 0.5vw;
-    margin-bottom: 0.75vw !important;
-}
-.login-btn-zoomed {
-    font-size: 0.28vw;
-    font-weight: 600;
-    background: #fff;
-    color: #000;
-    padding: 0.25vw 0.8vw;
-    border-radius: 1vw;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0.2vw 0.5vw rgba(0,0,0,0.2);
-}
-.login-btn-zoomed:hover {
-    transform: translateY(-0.02vw) scale(1.05);
-    box-shadow: 0 0.3vw 0.8vw rgba(0,0,0,0.3);
-}
-
-
 .hero-layer-2 { z-index: 2; }
 .hero-layer-2 div { width: 12.8vw; height: 19.2vw; transform: translate(-16vw, -3.6vw); }
 

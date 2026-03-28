@@ -15,7 +15,7 @@
                 <div class="w-full h-36 rounded-lg overflow-hidden mb-5 border border-gray-100">
                     <img src="{{ $image }}" class="w-full h-full object-cover rounded-lg" alt="{{ $title }}">
                 </div>
-                <h3 class="text-xl font-extrabold mb-2 text-black" style="font-family: var(--font-heading)">{{ $title }}</h3>
+                <h3 class="text-xl font-bold mb-2 text-gray-900 tracking-tight">{{ $title }}</h3>
                 <p class="text-gray-600 text-sm leading-relaxed font-medium">
                     {{ $shortDescription }}
                 </p>
@@ -24,7 +24,7 @@
         <!-- Back Face -->
         <div class="absolute inset-0 h-full w-full rounded-[inherit] bg-black text-white [transform-style:preserve-3d] [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col items-start justify-center p-8 border border-black shadow-2xl">
             <div class="[transform:translateZ(70px)_scale(.93)] h-full w-full flex flex-col items-start justify-center text-left">
-                <h3 class="text-2xl font-extrabold mb-4 text-white" style="font-family: var(--font-heading)">{{ $title }}</h3>
+                <h3 class="text-2xl font-bold mb-4 text-white tracking-tight">{{ $title }}</h3>
                 <p class="text-gray-300 leading-relaxed font-medium text-sm md:text-base">
                     {{ $description }}
                 </p>

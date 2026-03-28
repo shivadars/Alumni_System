@@ -65,18 +65,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $user->profile->department ?? 'N/A' }} / {{ $user->profile->graduation_year ?? 'N/A' }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                            @if($user->role === 'alumni' && $user->status === 'pending')
-                                                <form action="{{ route('admin.users.approve', $user) }}" method="POST" class="inline">
-                                                    @csrf
-                                                    <button type="submit" class="text-green-600 hover:text-green-900">Approve</button>
-                                                </form>
-                                                <form action="{{ route('admin.users.reject', $user) }}" method="POST" class="inline">
-                                                    @csrf
-                                                    <button type="submit" class="text-yellow-600 hover:text-yellow-900">Reject</button>
-                                                </form>
-                                            @endif
-
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             @if($user->id !== Auth::id())
                                                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this user?')">
                                                     @csrf

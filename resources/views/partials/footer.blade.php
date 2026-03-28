@@ -1,5 +1,5 @@
 
-<footer class="my-8 px-4 max-w-5xl mx-auto text-gray-900 border-t border-gray-200 mt-24">
+<footer id="footer" class="my-8 px-4 max-w-5xl mx-auto text-gray-900 border-t border-gray-200 mt-24">
     <div class="relative bg-white rounded-3xl max-w-5xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-8 shadow-xl border border-gray-100 mb-8 z-10 -mt-16">
         <div class="hidden md:block absolute -top-4 -left-8 w-[80px] h-[36px] scale-75 opacity-20 hover:opacity-100 transition duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="95" height="80" viewBox="0 0 95 80" fill="none">

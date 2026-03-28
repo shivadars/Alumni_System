@@ -66,11 +66,12 @@ import './bootstrap';
                 if (index % layerConfigs.length === 0) { // Central Hero (Layer 1)
                     opacity = 1; // Stay fully visible when hitting full screen 
 
-                    // Reveal text and gradient only when closing in on full screen
-                    if (progress > 0.6) {
-                        wrapper.classList.add('hero-zoomed');
-                    } else {
-                        wrapper.classList.remove('hero-zoomed');
+                    // Class list updates strictly when state changes
+                    const isZoomed = progress > 0.6;
+                    if (isZoomed !== !!wrapper._isZoomed) {
+                        if (isZoomed) wrapper.classList.add('hero-zoomed');
+                        else wrapper.classList.remove('hero-zoomed');
+                        wrapper._isZoomed = isZoomed;
                     }
 
                 } else {
@@ -82,11 +83,13 @@ import './bootstrap';
                 wrapper.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
                 wrapper.style.opacity = opacity;
                 
+                // Cache the div element dynamically if not present to stop querySelector DOM traverses on 60fps
+                if (!wrapper._childDiv) wrapper._childDiv = wrapper.querySelector('div');
+                
                 // Blur effect as layers get close to the camera (skipping central layer)
                 const blur = (index % layerConfigs.length !== 0 && z > 500) ? (z - 500) / 30 : 0;
-                const imageContainer = wrapper.querySelector('div');
-                if (imageContainer) {
-                    imageContainer.style.filter = `blur(${blur}px)`;
+                if (wrapper._childDiv) {
+                    wrapper._childDiv.style.filter = `blur(${blur}px)`;
                 }
             });
 
