@@ -47,7 +47,7 @@ RUN a2enmod rewrite
 # Execution Script
 RUN printf "#!/bin/sh\n\
 echo 'Waiting for database...' \n\
-sleep 15 \n\
+sleep 20 \n\
 php artisan migrate --force \n\
 php artisan db:seed --class=AdminUserSeeder \n\
 php artisan config:cache \n\

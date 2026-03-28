@@ -8,15 +8,35 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
+        value: true
       - key: APP_KEY
         value: base64:9NRfqUONUovXfRRXoGvi68Xbd4wVbK/1e9TwtJvw01Y=
       - key: DB_CONNECTION
         value: pgsql
-      - key: DATABASE_URL
+      - key: DB_URL
         fromDatabase:
           name: alumni-db
           property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: alumni-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: alumni-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: alumni-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: alumni-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: alumni-db
+          property: password
       - key: FILESYSTEM_DISK
         value: public
       - key: SESSION_DRIVER
