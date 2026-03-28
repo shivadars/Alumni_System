@@ -27,8 +27,7 @@
         
         <nav class="nav-links">
             <a href="/">Home</a>
-            <a href="#about">About</a>
-            <a href="#impact">Impact</a>
+            <a href="#testimonials">Testimonials</a>
             <a href="{{ route('login') }}" class="login-btn">Sign In</a>
         </nav>
     </header>
@@ -87,60 +86,92 @@
                 </div>
             </div>
         </div>
-
-        <!-- Impact Section -->
-        <section class="section" id="about">
-            <div class="section-header">
-                <h2 class="text-gradient">The power of your network, unlocked.</h2>
-                <p style="color: var(--text-secondary); font-size: 1.25rem;">We've built an ecosystem that goes beyond job boards. It's about legacy, mentorship, and building the future together.</p>
+        <!-- Features Section (Flipping Cards) -->
+        <section class="py-24 bg-white flex flex-col items-center border-t border-gray-200" id="features">
+            <div class="text-center mb-16 px-4">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-black" style="font-family: var(--font-heading)">Why Connectwork?</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto">Everything you need to grow your career, right at your fingertips.</p>
             </div>
             
-            <div class="grid-cards">
-                <div class="premium-card">
-                    <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    </div>
-                    <h3>Global Network</h3>
-                    <p>Access a worldwide directory of successful professionals across every industry imaginable.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4 w-full justify-items-center">
                 
-                <div class="premium-card" style="margin-top: 2rem;">
-                    <div class="card-icon" style="background: #3b82f6;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    </div>
-                    <h3>Career Catalyst</h3>
-                    <p>Exclusive internships and high-level roles shared directly by alumni who know your potential.</p>
-                </div>
-                
-                <div class="premium-card" style="margin-top: 4rem;">
-                    <div class="card-icon" style="background: #6366f1;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
-                    </div>
-                    <h3>Direct Mentorship</h3>
-                    <p>Bridge the gap with 1-on-1 guidance from those who have walked the path before you.</p>
-                </div>
+                <x-flipping-card 
+                    title="Expert Mentorship"
+                    shortDescription="Elevate your career through exclusive 1-on-1 guidance from established alumni leaders."
+                    description="Connect with established alumni who have walked your path. Get 1-on-1 guidance, career advice, and industry insights to accelerate your professional growth."
+                    image="{{ asset('images/landing/mentorship_3d.png') }}"
+                >
+                </x-flipping-card>
+
+                <x-flipping-card 
+                    title="Job Opportunities"
+                    shortDescription="Discover hand-picked roles directly from peers who know the true value of your education."
+                    description="Access an exclusive job board curated by your peers. Find roles directly posted by alumni looking to hire fresh talent or experienced professionals from our ecosystem."
+                    image="{{ asset('images/landing/hero_6.png') }}"
+                >
+                </x-flipping-card>
+
+                <x-flipping-card 
+                    title="Global Networking"
+                    shortDescription="Bridge the geographical gap and forge meaningful, long-lasting connections worldwide."
+                    description="Reunite with batchmates and discover alumni worldwide. Stay updated through group discussions and filter directories to find experts in specific industries."
+                    image="{{ asset('images/landing/hero_1.png') }}"
+                >
+                </x-flipping-card>
+
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="section" id="impact" style="text-align: center; background: radial-gradient(circle at center, #111, #000);">
-            <div style="max-width: 800px; margin: 0 auto;">
-                <h2 class="text-gradient" style="font-size: 4rem; margin-bottom: 2rem;">Ready to join the legacy?</h2>
-                <p style="color: var(--text-secondary); font-size: 1.5rem; margin-bottom: 3rem;">Join 5,000+ alumni and students building the future of our institution.</p>
-                <a href="{{ route('login') }}" class="login-btn" style="font-size: 1.25rem; padding: 1.25rem 3rem;">Get Started Now</a>
+
+        <!-- Testimonials Section -->
+        <section class="section testimonials-section" id="testimonials" x-data="circularTestimonials" @keydown.window="handleKey($event)">
+            <div class="testimonial-container">
+                <div class="testimonial-grid">
+                    <!-- Images -->
+                    <div class="image-container" x-ref="imageContainer">
+                        <template x-for="(testimonial, index) in testimonials" :key="index">
+                            <img
+                                :src="testimonial.src"
+                                :alt="testimonial.name"
+                                class="testimonial-image"
+                                :style="getImageStyle(index)"
+                            />
+                        </template>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="testimonial-content">
+                        <!-- Key wrap for re-rendering animation -->
+                        <template x-for="item in [testimonials[activeIndex]]" :key="activeIndex">
+                            <div class="quote-wrapper">
+                                <h3 class="name" x-text="item.name"></h3>
+                                <p class="designation" x-text="item.designation"></p>
+                                
+                                <!-- Words animation -->
+                                <p class="quote">
+                                    <template x-for="(word, wIndex) in item.quote.split(' ')" :key="wIndex">
+                                        <span class="animated-word" :style="`animation-delay: ${wIndex * 0.025}s`" x-html="word + '&amp;nbsp;'"></span>
+                                    </template>
+                                </p>
+                            </div>
+                        </template>
+                        
+                        <div class="arrow-buttons">
+                            <button class="arrow-button" @click="prev()" aria-label="Previous testimonial">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            </button>
+                            <button class="arrow-button" @click="next()" aria-label="Next testimonial">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="landing-footer">
-        <div class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Connectwork" style="height: 32px; filter: grayscale(1) opacity(0.5);">
-        </div>
-        <div class="footer-copy">
-            <p>© 2026 Connectwork. Crafted with excellence for our alumni community.</p>
-        </div>
-    </footer>
+    @include('partials.footer')
 
 </body>
 </html>

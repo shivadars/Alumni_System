@@ -129,4 +129,106 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+Alpine.data('circularTestimonials', () => ({
+    testimonials: [
+        {
+            name: "Amith Ajay",
+            designation: "Senior Architect at TechFlow",
+            quote: "The alumni network completely transformed my career path. I found my current startup co-founder through an alumni meetup hosted right here in Kochi.",
+            src: "/images/landing/person1.jpeg"
+        },
+        {
+            name: "Amal Biju",
+            designation: "Product Manager",
+            quote: "Connectwork bridged the gap between my college life and the corporate world. The mentorship I received from senior alumni was absolutely invaluable.",
+            src: "/images/landing/person2.jpeg"
+        },
+        {
+            name: "Suryakrishna K V",
+            designation: "Healthcare Consultant",
+            quote: "As someone transitioning fields after my studies in Trivandrum, the guidance I found here was extraordinary. It truly feels like a supportive family.",
+            src: "/images/landing/person3.jpeg"
+        },
+        {
+            name: "Abab P K",
+            designation: "Creative Director",
+            quote: "This platform isn't just a directory; it's a living community. Being able to give back and hire fresh talent from my own alma mater is incredibly rewarding.",
+            src: "/images/landing/person4.jpeg"
+        }
+    ],
+    activeIndex: 0,
+    containerWidth: 1200,
+    interval: null,
+
+    init() {
+        this.updateWidth();
+        window.addEventListener('resize', () => this.updateWidth());
+        this.startAutoplay();
+    },
+
+    updateWidth() {
+        if (this.$refs.imageContainer) {
+            this.containerWidth = this.$refs.imageContainer.offsetWidth;
+        }
+    },
+
+    startAutoplay() {
+        this.stopAutoplay();
+        this.interval = setInterval(() => {
+            this.next();
+        }, 5000);
+    },
+
+    stopAutoplay() {
+        if (this.interval) clearInterval(this.interval);
+    },
+
+    next() {
+        this.activeIndex = (this.activeIndex + 1) % this.testimonials.length;
+        this.startAutoplay();
+    },
+
+    prev() {
+        this.activeIndex = (this.activeIndex - 1 + this.testimonials.length) % this.testimonials.length;
+        this.startAutoplay();
+    },
+
+    handleKey(e) {
+        if (e.key === 'ArrowLeft') this.prev();
+        if (e.key === 'ArrowRight') this.next();
+    },
+
+    getGap() {
+        const width = this.containerWidth;
+        const minWidth = 1024;
+        const maxWidth = 1456;
+        const minGap = 60;
+        const maxGap = 86;
+        if (width <= minWidth) return minGap;
+        if (width >= maxWidth) return Math.max(minGap, maxGap + 0.06018 * (width - maxWidth));
+        return minGap + (maxGap - minGap) * ((width - minWidth) / (maxWidth - minWidth));
+    },
+
+    getImageStyle(index) {
+        const gap = this.getGap();
+        const maxStickUp = gap * 0.8;
+        const len = this.testimonials.length;
+        
+        const isActive = index === this.activeIndex;
+        const isLeft = (this.activeIndex - 1 + len) % len === index;
+        const isRight = (this.activeIndex + 1) % len === index;
+
+        if (isActive) {
+            return `z-index: 3; opacity: 1; pointer-events: auto; transform: translateX(0px) translateY(0px) scale(1) rotateY(0deg);`;
+        }
+        if (isLeft) {
+            return `z-index: 2; opacity: 1; pointer-events: auto; transform: translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(15deg);`;
+        }
+        if (isRight) {
+            return `z-index: 2; opacity: 1; pointer-events: auto; transform: translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(-15deg);`;
+        }
+        return `z-index: 1; opacity: 0; pointer-events: none; transform: translateX(0) scale(0.5);`;
+    }
+}));
+
 Alpine.start();
