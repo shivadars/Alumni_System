@@ -40,23 +40,24 @@
                 <!-- Parallax Layers -->
                 <div class="parallax-image-wrapper hero-layer-1">
                     <div>
-                        <img src="{{ asset('images/landing/hero_2.png') }}" alt="Focus">
+                        <img src="{{ asset('images/hero-bg.png') }}" alt="Focus">
                         <div class="integrated-content">
-                            <h1 class="text-gradient">Connect.<br>Engage. Grow.</h1>
-                            <p>Bridging the gap between education and excellence.</p>
+                            <h1 class="text-gradient" style="margin-bottom: 0;">Connect.<br>Engage. Grow.</h1>
+                            <p style="margin-bottom: 0.5rem;">Bridging the gap between education and excellence.</p>
+                            <a href="{{ route('login') }}" class="login-btn-zoomed" style="pointer-events: auto;">Sign In</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="parallax-image-wrapper hero-layer-2">
                     <div>
-                        <img src="{{ asset('images/landing/hero_1.png') }}" alt="Top Cityscape">
+                        <img src="{{ asset('images/landing/hero_6.png') }}" alt="Left Placeholder" style="background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);">
                     </div>
                 </div>
 
                 <div class="parallax-image-wrapper hero-layer-3">
-                    <div style="background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%); width: 100%; height: 100%;">
-                        <!-- Left Gradient Block -->
+                    <div>
+                        <img src="{{ asset('images/landing/hero_1.png') }}" alt="Top Cityscape">
                     </div>
                 </div>
 
@@ -80,7 +81,7 @@
 
                 <div class="parallax-image-wrapper hero-layer-7">
                     <div>
-                        <img src="{{ asset('images/landing/hero_1.png') }}" alt="Forest" style="filter: hue-rotate(90deg);">
+                        <img src="{{ asset('images/landing/hero_7.png') }}" alt="Bottom Right Placeholder">
                     </div>
                 </div>
             </div>

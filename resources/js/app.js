@@ -46,13 +46,13 @@ import './bootstrap';
 
             // Layer configs aligned directly with HTML order (1 to 7)
             const layerConfigs = [
-                { zStart: 100,  zEnd: 1200, scatterX: 0,     scatterY: 0 },      // Layer 1 (CENTRAL - 1200z fills frame)
-                { zStart: -200, zEnd: 1500, scatterX: 0,     scatterY: -1000 },  // Layer 2 (Top)
-                { zStart: -100, zEnd: 1300, scatterX: -1000, scatterY: 0 },      // Layer 3 (Left Blue Box)
-                { zStart: -300, zEnd: 1400, scatterX: 1000,  scatterY: 0 },      // Layer 4 (Right)
-                { zStart: -400, zEnd: 1200, scatterX: -800,  scatterY: 800 },    // Layer 5 (Bottom Left)
-                { zStart: -150, zEnd: 1250, scatterX: 0,     scatterY: 1000 },   // Layer 6 (Bottom Center)
-                { zStart: -500, zEnd: 1400, scatterX: 800,   scatterY: 800 }     // Layer 7 (Bottom Right / Vertical)
+                { zStart: 100,  zEnd: 1193, scatterX: 0,     scatterY: 0 },      // Layer 1 (Perfect 100vw fill point calibrated for baseline scale)
+                { zStart: -100, zEnd: 1500, scatterX: -1000, scatterY: -1000 },  // Layer 2 (Top Left Gradient)
+                { zStart: -200, zEnd: 1300, scatterX: 500,   scatterY: -1000 },  // Layer 3 (Top Cityscape)
+                { zStart: -300, zEnd: 1400, scatterX: 1000,  scatterY: 200 },    // Layer 4 (Right Mountains)
+                { zStart: -400, zEnd: 1200, scatterX: -1000, scatterY: 800 },    // Layer 5 (Bottom Left Lake)
+                { zStart: -150, zEnd: 1250, scatterX: 0,     scatterY: 1000 },   // Layer 6 (Bottom Center MacOS)
+                { zStart: -500, zEnd: 1400, scatterX: 800,   scatterY: 800 }     // Layer 7 (Bottom Right Forest)
             ];
             
             wrappers.forEach((wrapper, index) => {
@@ -64,8 +64,8 @@ import './bootstrap';
                 // Opacity logic:
                 let opacity = 1;
                 if (index % layerConfigs.length === 0) { // Central Hero (Layer 1)
-                    opacity = 1;
-                    if (progress > 0.95) opacity = 1 - (progress - 0.95) * 20; // Smooth end fade
+                    opacity = 1; // Stay fully visible when hitting full screen 
+
                 } else {
                     if (z > 800) {
                         opacity = Math.max(0, 1 - (z - 800) / 400); // Surrounding layers fade as they pass

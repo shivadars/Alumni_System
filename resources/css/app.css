@@ -138,29 +138,42 @@
     box-shadow: 0 40px 120px rgba(0,0,0,0.9);
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: #111;
+    flex-shrink: 0;
 }
 
-/* Cinematic Reference Layout (Zoom Parallax proportions) */
-.hero-layer-1 { z-index: 10; } /* CENTRAL PORTRAIT HERO - Text Integrating layer */
-.hero-layer-1 div { width: 28vw; height: 35vh; transform: translate(0, 0); border-color: var(--accent); }
+/* Precise 3D Layout Projection (Cancels out Z-depth initial scale artifacts) */
+.hero-layer-1 { z-index: 10; } /* Center Focus */
+.hero-layer-1 div { width: 20.5vw; height: 11.5vw; transform: translate(0, 0); border-color: var(--accent); }
+/* Let the native ultra HD image shine without dulling the whole frame */
+.hero-layer-1 img { filter: brightness(1) !important; }
 
-.hero-layer-2 { z-index: 2; } /* Top Cityscape */
-.hero-layer-2 div { width: 35vw; height: 25vh; transform: translate(5vw, -32vh); }
+/* Apply a subtle, localized dark radial gradient just behind the text to ensure perfect contrast while keeping the edges bright */
+.hero-layer-1 div::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 65%);
+    z-index: 5;
+    pointer-events: none;
+}
 
-.hero-layer-3 { z-index: 3; } /* Left Gradient Block */
-.hero-layer-3 div { width: 20vw; height: 40vh; transform: translate(-28vw, -10vh); }
+.hero-layer-2 { z-index: 2; }
+.hero-layer-2 div { width: 17vw; height: 25.6vw; transform: translate(-21.3vw, -4.8vw); }
 
-.hero-layer-4 { z-index: 4; } /* Right Mountain Image */
-.hero-layer-4 div { width: 28vw; height: 22vh; transform: translate(32vw, 5vh); }
+.hero-layer-3 { z-index: 3; }
+.hero-layer-3 div { width: 24.9vw; height: 13.6vw; transform: translate(0vw, -17vw); }
 
-.hero-layer-5 { z-index: 5; } /* Bottom Center/Left Image (Lake) */
-.hero-layer-5 div { width: 30vw; height: 20vh; transform: translate(-22vw, 30vh); }
+.hero-layer-4 { z-index: 4; }
+.hero-layer-4 div { width: 21.6vw; height: 18vw; transform: translate(25.8vw, 0vw); }
 
-.hero-layer-6 { z-index: 6; } /* Bottom Center (Mac OS Wallpaper) */
-.hero-layer-6 div { width: 22vw; height: 20vh; transform: translate(8vw, 35vh); }
+.hero-layer-5 { z-index: 5; }
+.hero-layer-5 div { width: 20.3vw; height: 15.2vw; transform: translate(-25.3vw, 19vw); }
 
-.hero-layer-7 { z-index: 7; } /* Bottom Right (Forest/Vertical) */
-.hero-layer-7 div { width: 14vw; height: 18vh; transform: translate(30vw, 30vh); }
+.hero-layer-6 { z-index: 6; }
+.hero-layer-6 div { width: 22vw; height: 13.2vw; transform: translate(0vw, 16.5vw); }
+
+.hero-layer-7 { z-index: 7; }
+.hero-layer-7 div { width: 21.3vw; height: 16vw; transform: translate(27.3vw, 20vw); }
 
 .parallax-image-wrapper img {
     width: 100%;
@@ -179,23 +192,45 @@
     text-align: center;
     z-index: 20;
     pointer-events: none;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .integrated-content h1 {
-    font-size: 3rem;
+    font-size: clamp(1.2rem, 1.5vw, 2rem);
     line-height: 1.1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     color: #fff;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .integrated-content p {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.8);
-    max-width: 80%;
-    margin: 0 auto;
-    line-height: 1.4;
+    font-size: clamp(0.5rem, 0.6vw, 0.7rem);
+    color: rgba(255,255,255,0.9);
+    max-width: 90%;
+    margin: 0 auto 0.5rem auto;
+    line-height: 1.2;
+}
+
+.login-btn-zoomed {
+    background: var(--accent);
+    color: #ffffff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.45rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    pointer-events: auto;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.login-btn-zoomed:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
 }
 
 /* Hero Text Overlay */
