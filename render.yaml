@@ -9,6 +9,8 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      - key: APP_KEY
+        value: base64:9NRfqUONUovXfRRXoGvi68Xbd4wVbK/1e9TwtJvw01Y=
       - key: DB_CONNECTION
         value: pgsql
       - key: FILESYSTEM_DISK
