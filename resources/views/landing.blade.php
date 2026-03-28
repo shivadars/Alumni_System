@@ -109,6 +109,14 @@
         <!-- Cinematic Parallax Hero -->
         <div class="parallax-container">
             <div class="parallax-sticky">
+                <!-- Side Impact Text -->
+                <div class="hero-side-label hero-side-left">
+                    <span>ESTABLISH LEGACY</span>
+                </div>
+                <div class="hero-side-label hero-side-right">
+                    <span>EXPAND NETWORK</span>
+                </div>
+
                 <!-- Parallax Layers -->
                 <div class="parallax-image-wrapper hero-layer-1">
                     <div>

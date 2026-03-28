@@ -105,6 +105,53 @@
 .hero-layer-7 { z-index: 7; }
 .hero-layer-7 div { width: 16vw; height: 12vw; transform: translate(20.5vw, 15vw); }
 
+/* Hero Side Impact Text */
+.hero-side-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5; /* Lowered to stay behind main cards but still visible */
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(0.8rem, 1.2vw, 1.2rem); /* Reduced for a more subtle look */
+    color: rgba(0, 0, 0, 0.12); /* Increased for better visibility */
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.15); /* More delicate stroke */
+    pointer-events: none;
+    letter-spacing: 1em; /* Increased for the "wide" cinematic effect */
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.hero-side-left {
+    left: 2rem;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    animation: sideFadeInLeft 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.8s;
+}
+
+.hero-side-right {
+    right: 2rem;
+    writing-mode: vertical-rl;
+    animation: sideFadeInRight 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.8s;
+}
+
+@keyframes sideFadeInLeft {
+    0% { opacity: 0; transform: translateY(-40%) rotate(180deg); filter: blur(10px); }
+    100% { opacity: 1; transform: translateY(-50%) rotate(180deg); filter: blur(0); }
+}
+
+@keyframes sideFadeInRight {
+    0% { opacity: 0; transform: translateY(-60%); filter: blur(10px); }
+    100% { opacity: 1; transform: translateY(-50%); filter: blur(0); }
+}
+
+/* Hide on mobile for better focus */
+@media (max-width: 768px) {
+    .hero-side-label { display: none; }
+}
+
 .parallax-image-wrapper img {
     width: 100%;
     height: 100%;
