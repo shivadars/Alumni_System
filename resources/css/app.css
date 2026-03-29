@@ -41,12 +41,20 @@
 
 
 
+/* Fix: Ensure fixed header is always composited above the 3D parallax stacking context */
+header[x-data] {
+    transform: translateZ(0);
+    will-change: transform;
+    z-index: 1000;
+}
+
 /* Hero Section - Zoom Parallax */
 .parallax-container {
     position: relative;
     height: 400vh;
     background: var(--bg-primary);
     padding-top: 80px;
+    /* Do NOT set transform or will-change here — it would make fixed children relative to this element */
 }
 
 .parallax-sticky {
@@ -60,6 +68,7 @@
     justify-content: center;
     perspective: 1500px;
     perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
 }
 
 .parallax-image-wrapper {
@@ -113,11 +122,11 @@
     z-index: 5; /* Lowered to stay behind main cards but still visible */
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: clamp(0.8rem, 1.2vw, 1.2rem); /* Reduced for a more subtle look */
-    color: rgba(0, 0, 0, 0.12); /* Increased for better visibility */
-    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.15); /* More delicate stroke */
+    font-size: clamp(1rem, 2vw, 2.5rem); /* Increased size for more impact */
+    color: rgba(0, 0, 0, 0.2); /* More visible */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15); /* Thicker stroke */
     pointer-events: none;
-    letter-spacing: 1em; /* Increased for the "wide" cinematic effect */
+    letter-spacing: 1.2em; /* Increased wide cinematic effect */
     text-transform: uppercase;
     white-space: nowrap;
     opacity: 0;
