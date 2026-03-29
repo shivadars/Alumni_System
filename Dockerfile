@@ -50,6 +50,7 @@ echo 'Waiting for database...' \n\
 sleep 20 \n\
 php artisan migrate --force \n\
 php artisan db:seed --class=AdminUserSeeder \n\
+php artisan storage:link \n\
 php artisan config:cache \n\
 php artisan route:cache \n\
 php artisan view:cache \n\
