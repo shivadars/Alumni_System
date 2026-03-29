@@ -28,7 +28,22 @@ Route::get('/debug-auth', function () {
             'environment' => [
                 'app_url' => config('app.url'),
                 'app_key_set' => !empty(config('app.key')),
+            ],
+            'debug_actions' => [
+                'run_seeder' => url('/debug-seed')
             ]
+        ];
+    } catch (\Exception $e) {
+        return ['error' => $e->getMessage()];
+    }
+});
+
+Route::get('/debug-seed', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'AdminUserSeeder']);
+        return [
+            'status' => 'Seeder executed successfully',
+            'output' => \Illuminate\Support\Facades\Artisan::output()
         ];
     } catch (\Exception $e) {
         return ['error' => $e->getMessage()];
