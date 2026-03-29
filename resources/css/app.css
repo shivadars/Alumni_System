@@ -25,7 +25,9 @@
 }
 
 /* Premium Typography */
-.landing-body h1, .landing-body h2, .landing-body h3 {
+.landing-body h1,
+.landing-body h2,
+.landing-body h3 {
     font-family: var(--font-heading);
     font-weight: 800;
     letter-spacing: -0.04em;
@@ -33,7 +35,7 @@
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #000 0%, rgba(0,0,0,0.5) 100%);
+    background: linear-gradient(135deg, #000 0%, rgba(0, 0, 0, 0.5) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -85,48 +87,110 @@ header[x-data] {
     position: relative;
     overflow: hidden;
     border-radius: 4px;
-    box-shadow: 0 40px 120px rgba(0,0,0,0.3);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 0, 0, 0.08);
     background: #f9fafb;
     flex-shrink: 0;
 }
 
 /* Precise 3D Layout Projection */
-.hero-layer-1 { z-index: 10; will-change: auto !important; } /* Center Focus: Prevent GPU blur freeze */
-.hero-layer-1 div { width: 15.4vw; height: 8.6vw; transform: translate(0, 0); border-color: var(--accent); }
+.hero-layer-1 {
+    z-index: 10;
+    will-change: auto !important;
+}
+
+/* Center Focus: Prevent GPU blur freeze */
+.hero-layer-1 div {
+    width: 15.4vw;
+    height: 8.6vw;
+    transform: translate(0, 0);
+    border-color: var(--accent);
+}
+
 /* Let the native ultra HD image shine without dulling the whole frame */
-.hero-layer-1 img { filter: brightness(1) !important; transition: filter 1s ease; }
-.hero-layer-2 { z-index: 2; }
-.hero-layer-2 div { width: 12.8vw; height: 19.2vw; transform: translate(-16vw, -3.6vw); }
+.hero-layer-1 img {
+    filter: brightness(1) !important;
+    transition: filter 1s ease;
+}
 
-.hero-layer-3 { z-index: 3; }
-.hero-layer-3 div { width: 18.7vw; height: 10.2vw; transform: translate(0vw, -12.8vw); }
+.hero-layer-2 {
+    z-index: 2;
+}
 
-.hero-layer-4 { z-index: 4; }
-.hero-layer-4 div { width: 16.2vw; height: 13.5vw; transform: translate(19.4vw, 0vw); }
+.hero-layer-2 div {
+    width: 12.8vw;
+    height: 19.2vw;
+    transform: translate(-16vw, -3.6vw);
+}
 
-.hero-layer-5 { z-index: 5; }
-.hero-layer-5 div { width: 15.2vw; height: 11.4vw; transform: translate(-19vw, 14.2vw); }
+.hero-layer-3 {
+    z-index: 3;
+}
 
-.hero-layer-6 { z-index: 6; }
-.hero-layer-6 div { width: 16.5vw; height: 9.9vw; transform: translate(0vw, 12.4vw); }
+.hero-layer-3 div {
+    width: 18.7vw;
+    height: 10.2vw;
+    transform: translate(0vw, -12.8vw);
+}
 
-.hero-layer-7 { z-index: 7; }
-.hero-layer-7 div { width: 16vw; height: 12vw; transform: translate(20.5vw, 15vw); }
+.hero-layer-4 {
+    z-index: 4;
+}
+
+.hero-layer-4 div {
+    width: 16.2vw;
+    height: 13.5vw;
+    transform: translate(19.4vw, 0vw);
+}
+
+.hero-layer-5 {
+    z-index: 5;
+}
+
+.hero-layer-5 div {
+    width: 15.2vw;
+    height: 11.4vw;
+    transform: translate(-19vw, 14.2vw);
+}
+
+.hero-layer-6 {
+    z-index: 6;
+}
+
+.hero-layer-6 div {
+    width: 16.5vw;
+    height: 9.9vw;
+    transform: translate(0vw, 12.4vw);
+}
+
+.hero-layer-7 {
+    z-index: 7;
+}
+
+.hero-layer-7 div {
+    width: 16vw;
+    height: 12vw;
+    transform: translate(20.5vw, 15vw);
+}
 
 /* Hero Side Impact Text */
 .hero-side-label {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 5; /* Lowered to stay behind main cards but still visible */
+    z-index: 5;
+    /* Lowered to stay behind main cards but still visible */
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: clamp(1rem, 2vw, 2.5rem); /* Increased size for more impact */
-    color: rgba(0, 0, 0, 0.2); /* More visible */
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15); /* Thicker stroke */
+    font-size: clamp(1rem, 2vw, 2.5rem);
+    /* Increased size for more impact */
+    color: rgba(0, 0, 0, 0.2);
+    /* More visible */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15);
+    /* Thicker stroke */
     pointer-events: none;
-    letter-spacing: 1.2em; /* Increased wide cinematic effect */
+    letter-spacing: 0.70em;
+    /* Significantly reduced to 0.15em */
     text-transform: uppercase;
     white-space: nowrap;
     opacity: 0;
@@ -147,18 +211,38 @@ header[x-data] {
 }
 
 @keyframes sideFadeInLeft {
-    0% { opacity: 0; transform: translateY(-40%) rotate(180deg); filter: blur(10px); }
-    100% { opacity: 1; transform: translateY(-50%) rotate(180deg); filter: blur(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(-40%) rotate(180deg);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) rotate(180deg);
+        filter: blur(0);
+    }
 }
 
 @keyframes sideFadeInRight {
-    0% { opacity: 0; transform: translateY(-60%); filter: blur(10px); }
-    100% { opacity: 1; transform: translateY(-50%); filter: blur(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(-60%);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(-50%);
+        filter: blur(0);
+    }
 }
 
 /* Hide on mobile for better focus */
 @media (max-width: 768px) {
-    .hero-side-label { display: none; }
+    .hero-side-label {
+        display: none;
+    }
 }
 
 .parallax-image-wrapper img {
@@ -302,13 +386,29 @@ header[x-data] {
 }
 
 @keyframes slideInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes blurIn {
-    0% { opacity: 0; filter: blur(10px); transform: translateY(5px); }
-    100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(5px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+    }
 }
 
 .animated-word {
@@ -321,12 +421,20 @@ header[x-data] {
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .navbar { padding: 1.5rem 2rem; }
-    .section { padding: 8rem 2rem; }
+    .navbar {
+        padding: 1.5rem 2rem;
+    }
+
+    .section {
+        padding: 8rem 2rem;
+    }
 }
 
 @media (max-width: 768px) {
-    .nav-links { display: none; }
+    .nav-links {
+        display: none;
+    }
+
     .testimonial-grid {
         display: flex;
         flex-direction: column;
@@ -338,6 +446,7 @@ header[x-data] {
     .testimonial-grid {
         grid-template-columns: 1fr 1fr;
     }
+
     .arrow-buttons {
         padding-top: 0;
     }
