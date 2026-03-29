@@ -1,7 +1,39 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
+// TEMPORARY DIAGNOSTIC ROUTE - DELETE AFTER USE
+Route::get('/debug-auth', function () {
+    try {
+        $admins = User::where('role', 'admin')->get(['email', 'name', 'role', 'status']);
+        $totalUsers = User::count();
+        $dbName = config('database.connections.pgsql.database');
+        
+        return [
+            'status' => 'Diagnostic active',
+            'database' => [
+                'name' => $dbName,
+                'total_users' => $totalUsers,
+            ],
+            'admins_found' => $admins->map(fn($u) => [
+                'email' => $u->email,
+                'role' => $u->role,
+                'status' => $u->status,
+                'password_length' => strlen($u->password), // Just check if it's hashing correctly
+            ]),
+            'environment' => [
+                'app_url' => config('app.url'),
+                'app_key_set' => !empty(config('app.key')),
+            ]
+        ];
+    } catch (\Exception $e) {
+        return ['error' => $e->getMessage()];
+    }
+});
 
 Route::get('/', function () {
     return view('landing');
