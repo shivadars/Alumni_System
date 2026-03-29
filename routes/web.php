@@ -9,28 +9,37 @@ use Illuminate\Support\Facades\DB;
 // TEMPORARY DIAGNOSTIC ROUTE - DELETE AFTER USE
 Route::get('/debug-auth', function () {
     try {
+        // AUTO-REPAIR: If no admin exists, create one now
+        $adminCount = User::where('role', 'admin')->count();
+        if ($adminCount === 0) {
+            User::updateOrCreate(
+                ['email' => 'admin@example.com'],
+                [
+                    'name' => 'Admin User',
+                    'email_verified_at' => now(),
+                    'role' => 'admin',
+                    'password' => Hash::make('password'),
+                    'remember_token' => Str::random(10),
+                ]
+            );
+        }
+
         $admins = User::where('role', 'admin')->get(['email', 'name', 'role', 'status']);
         $totalUsers = User::count();
-        $dbName = config('database.connections.pgsql.database');
         
         return [
-            'status' => 'Diagnostic active',
+            'status' => $adminCount === 0 ? 'Admin auto-created' : 'Diagnostic active',
             'database' => [
-                'name' => $dbName,
                 'total_users' => $totalUsers,
             ],
             'admins_found' => $admins->map(fn($u) => [
                 'email' => $u->email,
                 'role' => $u->role,
                 'status' => $u->status,
-                'password_length' => strlen($u->password), // Just check if it's hashing correctly
             ]),
             'environment' => [
                 'app_url' => config('app.url'),
-                'app_key_set' => !empty(config('app.key')),
-            ],
-            'debug_actions' => [
-                'run_seeder' => url('/debug-seed')
+                'is_live_url' => str_contains(config('app.url'), 'onrender.com'),
             ]
         ];
     } catch (\Exception $e) {
