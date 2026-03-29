@@ -190,6 +190,20 @@
                     shortDescription="A legacy network without borders. Connect from anywhere, scale to everywhere."
                     description="Forge elite partnerships spanning 50+ countries. Leverage the collective intelligence of a worldwide network to scale your career globally."
                     image="{{ asset('images/landing/hero_1.png') }}">
+                    <div class="w-full grid grid-cols-3 gap-2 pt-1">
+                        <div class="flex flex-col items-center bg-white/10 rounded-xl py-2 px-1">
+                            <span class="text-white font-bold text-lg leading-none">50+</span>
+                            <span class="text-gray-400 text-xs mt-1 text-center">Countries</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-white/10 rounded-xl py-2 px-1">
+                            <span class="text-white font-bold text-lg leading-none">12K+</span>
+                            <span class="text-gray-400 text-xs mt-1 text-center">Alumni</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-white/10 rounded-xl py-2 px-1">
+                            <span class="text-white font-bold text-lg leading-none">94%</span>
+                            <span class="text-gray-400 text-xs mt-1 text-center">Job Success</span>
+                        </div>
+                    </div>
                 </x-flipping-card>
 
             </div>

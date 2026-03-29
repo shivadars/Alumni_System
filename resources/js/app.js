@@ -142,19 +142,19 @@ Alpine.data('circularTestimonials', () => ({
         },
         {
             name: "Amal Biju",
-            designation: "Product Manager",
+            designation: "Product Manager at InnovateCo",
             quote: "Connectwork bridged the gap between my college life and the corporate world. The mentorship I received from senior alumni was absolutely invaluable.",
             src: "/images/landing/person2.jpeg"
         },
         {
             name: "Suryakrishna K V",
-            designation: "Healthcare Consultant",
+            designation: "Data Scientist at MedVision",
             quote: "As someone transitioning fields after my studies in Trivandrum, the guidance I found here was extraordinary. It truly feels like a supportive family.",
             src: "/images/landing/person3.jpeg"
         },
         {
             name: "Abab P K",
-            designation: "Creative Director",
+            designation: "Creative Director at PixelStudio",
             quote: "This platform isn't just a directory; it's a living community. Being able to give back and hire fresh talent from my own alma mater is incredibly rewarding.",
             src: "/images/landing/person4.jpeg"
         }
