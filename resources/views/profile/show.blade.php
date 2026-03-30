@@ -23,7 +23,7 @@
                         <div class="flex justify-between items-end -mt-16 md:-mt-24 mb-4 relative z-10">
                             <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-white p-1.5 ring-1 ring-slate-100 shadow-xl">
                                 @if($user->profile && $user->profile->profile_picture)
-                                    <img src="{{ asset('storage/' . $user->profile->profile_picture) }}" alt="{{ $user->name }}" class="w-full h-full rounded-full object-cover">
+                                    <img src="{{ $user->profile->getProfilePictureUrl() }}" alt="{{ $user->name }}" class="w-full h-full rounded-full object-cover">
                                 @else
                                     <div class="w-full h-full rounded-full bg-slate-100 flex items-center justify-center text-slate-300">
                                         <svg class="w-16 h-16 md:w-20 md:h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>

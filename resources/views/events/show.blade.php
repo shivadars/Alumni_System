@@ -9,9 +9,9 @@
                     <!-- Main Event Card -->
                     <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
                         <!-- Wide Banner Section -->
-                        <div class="w-full h-48 md:h-64 bg-slate-200 overflow-hidden">
+                        <div class="aspect-video w-full relative overflow-hidden bg-slate-100 border-b border-slate-100 flex items-center justify-center">
                             @if($event->image)
-                                <img src="{{ asset('storage/' . $event->image) }}" class="w-full h-full object-cover" alt="{{ $event->title }}">
+                                <img src="{{ $event->getImageUrl() }}" class="w-full h-full object-cover" alt="{{ $event->title }}">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-r from-slate-200 to-slate-300">
                                     <span class="text-slate-400 font-black text-xs italic uppercase tracking-[0.5em]">Event Banner</span>
@@ -79,7 +79,7 @@
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-12 h-12 bg-slate-100 rounded border border-slate-200 overflow-hidden">
                                     @if($event->user->profile && $event->user->profile->profile_picture)
-                                        <img src="{{ asset('storage/' . $event->user->profile->profile_picture) }}" class="w-full h-full object-cover">
+                                        <img src="{{ $event->user->profile->getProfilePictureUrl() }}" alt="{{ $event->user->name }}" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white ring-1 ring-slate-100">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-slate-400 font-bold">AL</div>
                                     @endif

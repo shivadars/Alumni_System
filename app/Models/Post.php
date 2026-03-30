@@ -25,4 +25,16 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function getImageUrl()
+    {
+        if (!$this->image) return null;
+        return (str_starts_with($this->image, 'http')) ? $this->image : asset('storage/' . $this->image);
+    }
+
+    public function getVideoUrl()
+    {
+        if (!$this->video) return null;
+        return (str_starts_with($this->video, 'http')) ? $this->video : asset('storage/' . $this->video);
+    }
 }

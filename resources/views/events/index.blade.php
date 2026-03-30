@@ -21,7 +21,7 @@
                 @forelse($upcomingEvents as $event)
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
                         @if($event->image)
-                            <img src="{{ asset('storage/' . $event->image) }}" class="w-full h-48 object-cover" alt="{{ $event->title }}">
+                            <img src="{{ $event->getImageUrl() }}" class="w-full h-48 object-cover" alt="{{ $event->title }}">
                         @else
                             <div class="w-full h-48 bg-slate-100 flex items-center justify-center text-slate-300">
                                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>

@@ -17,7 +17,7 @@
                             <x-input-label for="profile_picture" :value="__('Profile Picture')" />
                             @if(isset($profile) && $profile->profile_picture)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $profile->profile_picture) }}" alt="Profile Picture" class="w-8 h-8 rounded-full object-cover">
+                                    <img src="{{ Auth::user()->profile->getProfilePictureUrl() }}" alt="Current Profile Picture" class="w-32 h-32 rounded-full object-cover border-4 border-slate-50 shadow-md">
                                 </div>
                             @endif
                             <input id="profile_picture" type="file" name="profile_picture" class="block mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />

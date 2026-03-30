@@ -21,4 +21,10 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'event_attendees')->withTimestamps();
     }
+
+    public function getImageUrl()
+    {
+        if (!$this->image) return null;
+        return (str_starts_with($this->image, 'http')) ? $this->image : asset('storage/' . $this->image);
+    }
 }

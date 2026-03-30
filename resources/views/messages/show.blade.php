@@ -21,7 +21,7 @@
                             <a href="{{ route('messages.show', $conversation->id) }}" data-name="{{ strtolower($conversation->name) }}" class="conversation-item flex items-center gap-4 p-5 hover:bg-white hover:shadow-sm transition-all border-b border-slate-50 group {{ $user->id == $conversation->id ? 'bg-white shadow-sm ring-1 ring-slate-100' : '' }}">
                                 <div class="relative flex-shrink-0">
                                     @if($conversation->profile && $conversation->profile->profile_picture)
-                                        <img src="{{ asset('storage/' . $conversation->profile->profile_picture) }}" alt="{{ $conversation->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-white">
+                                        <img src="{{ $conversation->otherUser($user->id)->profile->getProfilePictureUrl() }}" alt="{{ $conversation->otherUser($user->id)->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-white">
                                     @else
                                         <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 font-bold border-2 border-white">
                                             {{ substr($conversation->name, 0, 1) }}
@@ -68,7 +68,7 @@
                             </a>
                             <div class="relative">
                                 @if($user->profile && $user->profile->profile_picture)
-                                    <img src="{{ asset('storage/' . $user->profile->profile_picture) }}" alt="{{ $user->name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-slate-50">
+                                    <img src="{{ $otherUser->profile->getProfilePictureUrl() }}" alt="{{ $otherUser->name }}" class="w-12 h-12 rounded-full object-cover shadow-sm ring-2 ring-slate-50">
                                 @else
                                     <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold border border-slate-200">
                                         {{ substr($user->name, 0, 1) }}

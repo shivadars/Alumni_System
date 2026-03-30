@@ -9,7 +9,7 @@
             'user_id' => $comment->user_id,
             'created_at_human' => $comment->created_at->diffForHumans(),
             'user' => ['id' => $comment->user->id, 'name' => $comment->user->name],
-            'profile_picture' => $comment->user->profile?->profile_picture ? asset('storage/' . $comment->user->profile->profile_picture) : null
+            'profile_picture' => $comment->user->profile?->getProfilePictureUrl()
         ];
     })) }},
     newComment: '',
@@ -33,7 +33,7 @@
         .then(data => {
             const comment = data.comment;
             // Add transformed data for the UI
-            comment.profile_picture = comment.user.profile?.profile_picture ? '{{ asset('storage') }}/' + comment.user.profile.profile_picture : null;
+            comment.profile_picture = comment.user.profile?.profile_picture ? (comment.user.profile.profile_picture.startsWith('http') ? comment.user.profile.profile_picture : '{{ asset('storage') }}/' + comment.user.profile.profile_picture) : null;
             this.comments.push(comment);
             this.newComment = '';
         })
@@ -69,7 +69,7 @@
     <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-4">
             @if($post->user->profile && $post->user->profile->profile_picture)
-                <img src="{{ asset('storage/' . $post->user->profile->profile_picture) }}" alt="{{ $post->user->name }}" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-50 shadow-sm">
+                <img src="{{ $post->user->profile->getProfilePictureUrl() }}" alt="{{ $post->user->name }}" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-50 shadow-sm">
             @else
                 <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -102,14 +102,14 @@
         <p class="text-slate-600 text-base md:text-lg leading-relaxed mb-4 whitespace-pre-wrap">{{ $post->content }}</p>
         @if($post->image)
             <div class="mt-4 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
-                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-auto object-cover max-h-[500px]" loading="lazy">
+                <img src="{{ $post->getImageUrl() }}" alt="{{ $post->title }}" class="w-full h-auto object-cover max-h-[500px]" loading="lazy">
             </div>
         @endif
 
         @if($post->video)
             <div class="mt-4 rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-900">
                 <video controls class="w-full h-auto max-h-[500px]" preload="none">
-                    <source src="{{ asset('storage/' . $post->video) }}" type="video/mp4">
+                    <source src="{{ $post->getVideoUrl() }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
