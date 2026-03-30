@@ -36,7 +36,7 @@ class Profile extends Model
             return $this->profile_picture;
         }
 
-        // Handle case where it might be a relative path or an old broken path
-        return asset('storage/' . ltrim($this->profile_picture, '/'));
+        // Return the supabase URL for the image
+        return \Illuminate\Support\Facades\Storage::disk('supabase')->url($this->profile_picture);
     }
 }

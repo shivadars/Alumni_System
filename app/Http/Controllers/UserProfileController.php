@@ -67,7 +67,7 @@ class UserProfileController extends Controller
         ];
 
         if ($request->hasFile('profile_picture')) {
-            $path = $request->file('profile_picture')->store('profiles', 'public');
+            $path = $request->file('profile_picture')->store('profiles', 'supabase');
             $data['profile_picture'] = $path;
         }
 

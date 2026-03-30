@@ -69,7 +69,7 @@ class EventController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public');
+            $imagePath = $request->file('image')->store('events', 'supabase');
         }
 
         Event::create([

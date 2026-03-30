@@ -39,12 +39,12 @@ class PostController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('posts/images', 'public');
+            $imagePath = $request->file('image')->store('posts/images', 'supabase');
         }
 
         $videoPath = null;
         if ($request->hasFile('video')) {
-            $videoPath = $request->file('video')->store('posts/videos', 'public');
+            $videoPath = $request->file('video')->store('posts/videos', 'supabase');
         }
 
         $post = Post::create([

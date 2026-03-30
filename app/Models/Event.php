@@ -25,6 +25,6 @@ class Event extends Model
     public function getImageUrl()
     {
         if (!$this->image) return null;
-        return (str_starts_with($this->image, 'http')) ? $this->image : asset('storage/' . $this->image);
+        return (str_starts_with($this->image, 'http')) ? $this->image : \Illuminate\Support\Facades\Storage::disk('supabase')->url($this->image);
     }
 }
