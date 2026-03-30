@@ -28,9 +28,15 @@ class Profile extends Model
 
     public function getProfilePictureUrl()
     {
+        if (empty($this->profile_picture)) {
+            return null;
+        }
+
         if (filter_var($this->profile_picture, FILTER_VALIDATE_URL)) {
             return $this->profile_picture;
         }
-        return $this->profile_picture ? asset('storage/' . $this->profile_picture) : null;
+
+        // Handle case where it might be a relative path or an old broken path
+        return asset('storage/' . ltrim($this->profile_picture, '/'));
     }
 }

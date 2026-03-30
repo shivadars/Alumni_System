@@ -19,7 +19,8 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Create Storage Link
+# Create Storage link or folder if it exists
+rm -rf public/storage
 php artisan storage:link
 
 # Run migrations (Safe for Production)
