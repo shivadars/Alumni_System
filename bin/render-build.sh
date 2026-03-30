@@ -25,5 +25,6 @@ php artisan storage:link
 # Run migrations (Safe for Production)
 php artisan migrate --force
 
-# Ensure Admin exists
+# Ensure Admin and Alumni exist
 php artisan db:seed --class=AdminUserSeeder
+php artisan db:seed --class=CSAlumniSeeder
