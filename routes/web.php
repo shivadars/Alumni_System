@@ -1,63 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-
-// TEMPORARY DIAGNOSTIC ROUTE - DELETE AFTER USE
-Route::get('/debug-auth', function () {
-    try {
-        // AUTO-REPAIR: If no admin exists, create one now
-        $adminCount = User::where('role', 'admin')->count();
-        if ($adminCount === 0) {
-            User::updateOrCreate(
-                ['email' => 'admin@example.com'],
-                [
-                    'name' => 'Admin User',
-                    'email_verified_at' => now(),
-                    'role' => 'admin',
-                    'password' => Hash::make('password'),
-                    'remember_token' => Str::random(10),
-                ]
-            );
-        }
-
-        $admins = User::where('role', 'admin')->get(['email', 'name', 'role', 'status']);
-        $totalUsers = User::count();
-        
-        return [
-            'status' => $adminCount === 0 ? 'Admin auto-created' : 'Diagnostic active',
-            'database' => [
-                'total_users' => $totalUsers,
-            ],
-            'admins_found' => $admins->map(fn($u) => [
-                'email' => $u->email,
-                'role' => $u->role,
-                'status' => $u->status,
-            ]),
-            'environment' => [
-                'app_url' => config('app.url'),
-                'is_live_url' => str_contains(config('app.url'), 'onrender.com'),
-            ]
-        ];
-    } catch (\Exception $e) {
-        return ['error' => $e->getMessage()];
-    }
-});
-
-Route::get('/debug-seed', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'AdminUserSeeder']);
-        return [
-            'status' => 'Seeder executed successfully',
-            'output' => \Illuminate\Support\Facades\Artisan::output()
-        ];
-    } catch (\Exception $e) {
-        return ['error' => $e->getMessage()];
-    }
-});
 
 Route::get('/', function () {
     return view('landing');

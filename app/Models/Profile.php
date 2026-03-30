@@ -25,4 +25,12 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getProfilePictureUrl()
+    {
+        if (filter_var($this->profile_picture, FILTER_VALIDATE_URL)) {
+            return $this->profile_picture;
+        }
+        return $this->profile_picture ? asset('storage/' . $this->profile_picture) : null;
+    }
 }

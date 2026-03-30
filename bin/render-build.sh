@@ -19,6 +19,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Create Storage Link
+php artisan storage:link
+
 # Run migrations (Safe for Production)
 php artisan migrate --force
 

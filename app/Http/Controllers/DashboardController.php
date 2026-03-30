@@ -20,12 +20,13 @@ class DashboardController extends Controller
 
         // Filter posts: show dept-specific posts OR any admin posts
         if (in_array($user->role, ['student', 'alumni', 'department'])) {
-            $department = $user->profile->department;
-            $query->where(function ($q) use ($department) {
+            $department = $user->profile->department ?? 'General';
+            $query->where(function ($q) use ($department, $user) {
                 $q->whereRaw('LOWER(department) LIKE ?', ['%' . strtolower($department) . '%'])
                   ->orWhereHas('user', function ($u) {
                       $u->where('role', 'admin');
-                  });
+                  })
+                  ->orWhere('user_id', $user->id);
             });
         }
 

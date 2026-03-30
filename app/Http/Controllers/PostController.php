@@ -52,7 +52,7 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'category' => $request->category,
-            'department' => Auth::user()->profile ? Auth::user()->profile->department : null,
+            'department' => (Auth::user()->profile && Auth::user()->profile->department) ? trim(Auth::user()->profile->department) : 'General',
             'image' => $imagePath,
             'video' => $videoPath,
         ]);

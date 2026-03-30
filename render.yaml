@@ -9,6 +9,8 @@ services:
         value: production
       - key: APP_DEBUG
         value: true
+      - key: APP_NAME
+        value: Connectwork
       - key: APP_URL
         value: https://alumni-system-y4h6.onrender.com
       - key: APP_KEY

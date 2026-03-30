@@ -158,7 +158,7 @@
                                 <div class="flex items-center justify-between group py-2 border-b border-slate-50 last:border-0">
                                     <div class="flex items-center gap-3">
                                         @if($connection->profile && $connection->profile->profile_picture)
-                                            <img src="{{ asset('storage/' . $connection->profile->profile_picture) }}" alt="{{ $connection->name }}" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                                            <img src="{{ $connection->profile->getProfilePictureUrl() }}" alt="{{ $connection->name }}" class="w-8 h-8 rounded-full object-cover shadow-sm">
                                         @else
                                             <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-300">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>

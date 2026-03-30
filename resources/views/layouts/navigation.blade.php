@@ -111,7 +111,7 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center gap-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             @if(Auth::user()->profile && Auth::user()->profile->profile_picture)
-                                <img src="{{ asset('storage/' . Auth::user()->profile->profile_picture) }}" alt="{{ Auth::user()->name }}" class="h-7 w-7 rounded-full object-cover border border-gray-200">
+                                <img src="{{ Auth::user()->profile->getProfilePictureUrl() }}" alt="{{ Auth::user()->name }}" class="h-7 w-7 rounded-full object-cover border border-gray-200">
                             @else
                                 <div class="h-7 w-7 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200">
                                     <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
