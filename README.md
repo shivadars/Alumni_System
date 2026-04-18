@@ -1,11 +1,10 @@
-ConnectWork – Alumni Interaction System
+# ConnectWork – Alumni Interaction System
 
-Description
+# Description
 
 ConnectWork is a web-based alumni interaction platform designed to connect students, alumni, and departments in a structured and meaningful way. The system enables communication, opportunity sharing, and mentorship while ensuring that interactions remain relevant through department-based content filtering.
 
-Technologies Used
-
+# Technologies Used
 
 Backend: Laravel (PHP)
 
@@ -17,21 +16,19 @@ Architecture: MVC (Model-View-Controller)
 
 Other: Eloquent ORM, Middleware (Role-based access control)
 
-Key Features
+# Key Features
 
- Role-based authentication (Student, Alumni, Department, Admin)
+ * Role-based authentication (Student, Alumni, Department, Admin)
  
- Department-based content visibility (users see only relevant posts)
+ * Department-based content visibility (users see only relevant posts)
  
- Community feed for sharing jobs, internships, and announcements
+ * Community feed for sharing jobs, internships, and announcements
  
- Alumni directory with department-wise filtering
+ * Alumni directory with department-wise filtering
  
- Messaging system for communication between department and alumni
- 
- Department dashboard for posting updates and interacting with users
- 
- Secure routing using middleware and role-based access control
+ * Messaging system for communication between department,alumni and students
+  
+ * Secure routing using middleware and role-based access control
  
 Process Overview
 
