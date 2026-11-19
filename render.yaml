@@ -3,6 +3,7 @@ services:
     name: alumni-system
     env: docker
     plan: free
+    region: oregon
     healthCheckPath: /up
     envVars:
       - key: APP_ENV
@@ -15,6 +16,8 @@ services:
         value: https://alumni-system-y4h6.onrender.com
       - key: APP_KEY
         value: base64:9NRfqUONUovXfRRXoGvi68Xbd4wVbK/1e9TwtJvw01Y=
+      - key: LOG_CHANNEL
+        value: stderr
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_URL
@@ -51,5 +54,6 @@ services:
 databases:
   - name: alumni-db
     plan: free
+    region: oregon
     databaseName: alumni_system
     user: admin
